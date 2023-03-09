@@ -1,0 +1,39 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    $('#InsertRecordFirstName').hide();
+    $('#InsertRecordLastName').hide();
+    $('#firstNameLabel').hide();
+    $('#lastNameLabel').hide();
+    $('#tableCont1').children().eq(1).hide();
+    $('#tableCont2').children().eq(1).hide();
+    $('.cbFormFieldSet span.cbFormData').hide();
+    $('#firstName').on('change', function (event) {
+        $('#InsertRecordFirstName').val($('#firstName').val());
+    });
+    $('#lastName').on('change', function (event) {
+        $('#InsertRecordLastName').val($('#lastName').val());
+    });
+    if ($('input[name=send]:checked', '.emailAndSms').val() === '1') {
+        $('input[value=Email]', '.cbFormData').prop("checked", true);
+    }else {
+        $('input[value=SMS]', '.cbFormData').prop("checked", true);
+    }
+    $('.emailAndSms').on('change', function (event) {
+        const messageSw = $('input[name=send]:checked', '.emailAndSms').val();
+        if (messageSw === '1') {
+            $('input[value=Email]', '.cbFormData').prop("checked", true);
+        }else {
+            $('input[value=SMS]', '.cbFormData').prop("checked", true);
+        }
+    });
+</script>
+<noscript>
+    <style>
+        .lastFirst{
+            display: none;
+        }
+        .chooseContainer {
+            display: none;
+        }
+    </style>
+</noscript>
