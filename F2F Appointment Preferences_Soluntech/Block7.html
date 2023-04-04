@@ -1,0 +1,35 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    function isValidDate(dateString) {
+        const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+        return datePattern.test(dateString);
+    }
+    $('#EditRecordPreferredAppointmentDate').on('keydown', function (event) {
+        const key = event.key;
+        if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter" || key === ".") {
+            return true;
+        }
+        if (/\d/.test(key) || key === '/') {
+            return true;
+        }
+        return false;
+    });
+    function isFormComplete() {
+        return $('#EditRecordTimeZone').val() != '' &&
+            $('#EditRecordTimeZone').val() != 'Select Time Zone' &&
+            isValidDate($('#EditRecordPreferredAppointmentDate').val()) &&
+            $('#EditRecordPreferredAppointmentTime').val() != '';
+    }
+    $('.cbUpdateButton').hide();
+    $('#continueButton').prop('disabled', !isFormComplete());
+    $('#EditRecordTimeZone').on('change', function (event) {
+        $('#continueButton').prop('disabled', !isFormComplete());
+    });
+    $('#EditRecordPreferredAppointmentDate').on('change', function (event) {
+        $('#continueButton').prop('disabled', !isFormComplete());
+    });
+    $('#continueButton').click(function (event) {
+        $('.cbUpdateButton').click();
+    });
+</script>

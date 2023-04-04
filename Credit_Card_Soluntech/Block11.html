@@ -1,0 +1,222 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    function isValidCreditCardNumber(cardNumber) {
+        cardNumber = cardNumber.replace(/\D/g, '');
+        if (cardNumber.length < 13 || cardNumber.length > 19) {
+            return false;
+        }
+        var digits = cardNumber.split('').reverse().map(Number);
+        var sum = digits.reduce(function (total, digit, index) {
+            if (index % 2 === 1) {
+                digit *= 2;
+                if (digit > 9) {
+                    digit -= 9;
+                }
+            }
+            return total + digit;
+        }, 0);
+        return sum % 10 === 0;
+    }
+    function isAmex(cardNumber) {
+        return /^3[47][0-9]{13}$/.test(cardNumber.replace(/\D/g, ''));
+    }
+    function isValidCvv(cardNumber, cvv) {
+        const cvvPattern = isAmex(cardNumber) ? /^[0-9]{4}$/ : /^[0-9]{3}$/;
+        return cvvPattern.test(cvv);
+    }
+    function isValidMonth(month) {
+        // Remove all non-numeric characters
+        const numericMonth = month.replace(/\D/g, '');
+
+        // Check if month is a valid number between 1 and 12
+        const monthNumber = Number(numericMonth);
+        if (monthNumber < 1 || monthNumber > 12) {
+            return false;
+        }
+
+        return true;
+    }
+    function isValidYear(year) {
+        if (!/^\d{2}$/.test(year)) { // Check if year is 2 digits
+            return false;
+        }
+        return true;
+    }
+    function isValidDate(month, year) {
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
+        if ((currentYear == Number(year) && Number(month) < currentMonth) || year < currentYear) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function formatCreditCardNumber(input) {
+        let cardNumber = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        let maxLength = 16; // Set default max length for card number
+        let formatPattern = /(\d{1,4})(\d{1,6})?(\d{1,5})?/; // Set default format pattern
+
+        // Detect card type based on first digits
+        if (/^4/.test(cardNumber)) { // Visa
+            maxLength = 16;
+            formatPattern = /(\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,4})?/; // Set format pattern for Visa
+        } else if (/^5[1-5]/.test(cardNumber)) { // Mastercard
+            maxLength = 16;
+            formatPattern = /(\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,4})?/; // Set format pattern for Mastercard
+        } else if (/^3[47]/.test(cardNumber)) { // American Express
+            maxLength = 15;
+            formatPattern = /(\d{1,4})(\d{1,6})?(\d{1,5})?/; // Set format pattern for Amex
+        } else if (/^6(?:011|5)/.test(cardNumber)) { // Discover
+            maxLength = 16;
+            formatPattern = /(\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,4})?/; // Set format pattern for Discover
+        }
+
+        cardNumber = cardNumber.slice(0, maxLength); // Limit card number to max length
+
+        // Format card number with spaces every 4 digits and hyphen for Amex
+        cardNumber = cardNumber.replace(formatPattern, function (match, group1, group2, group3, group4) {
+            let formattedNumber = group1;
+            if (group2) formattedNumber += ' ' + group2;
+            if (group3) formattedNumber += ' ' + group3;
+            if (group4) formattedNumber += ' ' + group4;
+            return formattedNumber;
+        });
+
+        input.value = cardNumber; // Update input value
+    }
+    function formatCreditCardMonthIn(input) {
+        let month = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        month = month.slice(0, 2); // Limit month to 2 digits
+        if (month > 12) month = '12'; // Set max month to 12
+        input.value = month; // Update input value
+    }
+    function formatCreditCardMonthOut(input) {
+        let month = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        month = month.slice(0, 2); // Limit month to 2 digits
+
+        if (month.length === 1 && parseInt(month) > 0 && parseInt(month) < 10) {
+            // Add leading zero when user stops typing and month is less than 10
+            month = '0' + month;
+        }
+
+        input.value = month; // Update input value
+    }
+    function formatCreditCardYearIn(input) {
+        let year = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        let maxLength = 2; // Set default max length for year
+        if (year.length > maxLength) {
+            year = year.slice(0, maxLength); // Limit year to max length
+        }
+        input.value = year; // Update input value
+    }
+    function formatCreditCardYearOut(input) {
+        let year = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        let currentYear = new Date().getFullYear().toString().substr(-2); // Get the last two digits of the current year
+        let maxLength = 2; // Set default max length for year
+        if (year.length === maxLength) {
+            if (parseInt(year) < parseInt(currentYear)) {
+                year = currentYear;
+            }
+        }
+
+        if (year.length === 1) {
+            year = "0" + year;
+        }
+
+        input.value = year; // Update input value
+    }
+
+
+    $('#EditRecordCreditCardNumber').attr('oninput', 'formatCreditCardNumber(this)');
+    $('#cbParamVirtual1').attr('oninput', 'formatCreditCardMonthIn(this)');
+    $('#cbParamVirtual1').on("focusout", function (event) {
+        formatCreditCardMonthOut(event.currentTarget);
+    });
+    $('#cbParamVirtual2').attr('oninput', 'formatCreditCardYear(this)');
+    $('#cbParamVirtual2').on("focusout", function (event) {
+        formatCreditCardYearOut(event.currentTarget);
+    });
+
+    if ($('#caspioform .cbFormCommonError').length == 0) {
+        $('#creditCardError').hide();
+        $('#formatCreditCardError').hide();
+        $('#cardMonthError').hide();
+        $('#formatCardMonthError').hide();
+        $('#cardYearError').hide();
+        $('#formatCardYearError').hide();
+        $('#cardCVVError').hide();
+        $('#formatCardCVVError').hide();
+        $('#cardNameError').hide();
+    }
+
+    $('.cbUpdateButtonContainer').hide();
+
+    $('#continueButton').click(function (event) {
+
+        $('#creditCardError').hide();
+        $('#formatCreditCardError').hide();
+        $('#cardMonthError').hide();
+        $('#formatCardMonthError').hide();
+        $('#cardYearError').hide();
+        $('#formatCardYearError').hide();
+        $('#cardCVVError').hide();
+        $('#formatCardCVVError').hide();
+        $('#cardNameError').hide();
+
+        let sw = false;
+
+        const ccNumber = $('#EditRecordCreditCardNumber').val();
+        const ccMonth = $('#cbParamVirtual1').val();
+        const ccYear = $('#cbParamVirtual2').val();
+        const ccCVV = $('#EditRecordSecurityCode').val();
+        const ccName = $('#EditRecordNameOnCard').val();
+
+        if (ccNumber === '') {
+            $('#creditCardError').show();
+            sw = true;
+        } else if (!isValidCreditCardNumber(ccNumber)) {
+            $('#formatCreditCardError').show();
+            sw = true;
+        } else if (ccCVV != '' && !isValidCvv(ccNumber, ccCVV)) {
+            $('#formatCardCVVError').show();
+            sw = true;
+        }
+
+        if (ccMonth === '') {
+            $('#cardMonthError').show();
+            sw = true;
+        } else if (!isValidMonth(ccMonth)) {
+            $('#formatCardMonthError').show();
+            sw = true;
+        }
+
+        if (ccYear === '') {
+            $('#cardYearError').show();
+            sw = true;
+        } else if (!isValidYear(ccYear)) {
+            $('#formatCardYearError').show();
+            sw = true;
+        }
+
+        if (ccCVV === '') {
+            $('#cardCVVError').show();
+            sw = true;
+        }
+
+        if (ccName === '') {
+            $('#cardNameError').show();
+            sw = true;
+        }
+
+        if (!sw) {
+            if (!isValidDate(ccMonth, '20' + ccYear)) {
+                alert('Invalid month and year, Date can not be in the past.');
+            } else {
+                $('.cbSubmitButton').click();
+            }
+        }
+    });
+
+</script>

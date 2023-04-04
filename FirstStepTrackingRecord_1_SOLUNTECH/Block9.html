@@ -1,6 +1,10 @@
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script>
+    function isValidEmail(email) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    }
     function isValidPhoneNumber(phoneNumber) {
         const regex = /^\(\d{3}\) \d{3}-\d{4}$/;
         return regex.test(phoneNumber);
@@ -9,6 +13,12 @@
         const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
         return datePattern.test(dateString);
     }
+    $('#InsertRecordDOB').on('keydown', function (event) {
+        const keyCode = event.keyCode || event.which;
+        if (keyCode === 8 || keyCode === 46) return true;
+        if ((keyCode >= 48 && keyCode <= 57) || keyCode === 191) return true;
+        return false;
+    });
     function formatPhoneNumber(input) {
         let digits = input.value.replace(/\D/g, '');
         let formattedNumber = digits.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
@@ -16,23 +26,37 @@
     }
     $('#InsertRecordCellPhone').attr('type', 'tel');
     $('#InsertRecordCellPhone').attr('oninput', 'formatPhoneNumber(this)');
-    if ($('#caspioform .cbFormCommonError').length == 0){
-        $('.lastNameError').hide();
+    if ($('#caspioform .cbFormCommonError').length == 0) {
+        $('#firstNameError').hide();
+        $('#lastNameError').hide();
+        $('.errorContainer').hide();
         $('#dateError').hide();
         $('#formatDateError').hide();
+        $('#emailError').hide();
+        $('#formatEmailError').hide();
         $('#cellphoneError').hide();
         $('#formatCellphoneError').hide();
     }
 
-    //$("div[class^='cbFormFieldCell cbFormBlock18_']").hide();
+    //$("div[data-cb-cell-name^='cbParamVirtual2_']").hide();
     //$("div[class^='cbFormFieldCell cbFormBlock19_']").hide();
 
     $('.cbSubmitButtonContainer').hide();
-
-    //$('#tableCont1').children().eq(1).hide();
-    //$('#tableCont2').children().eq(1).hide();
+    $('.cbFormError').hide();
+    $('#InsertRecordFirstName').hide();
+    $('#InsertRecordLastName').hide();
+    $('#firstNameLabel').hide();
+    $('#lastNameLabel').hide();
+    $('#tableCont1').children().eq(1).hide();
+    $('#tableCont2').children().eq(1).hide();
     $('.cbFormFieldSet span.cbFormData').hide();
-    /*if ($('input[name=send]:checked', '.emailAndSms').val() === '1') {
+    $('#firstName').on('change', function (event) {
+        $('#InsertRecordFirstName').val($('#firstName').val());
+    });
+    $('#lastName').on('change', function (event) {
+        $('#InsertRecordLastName').val($('#lastName').val())
+    });
+    if ($('input[name=send]:checked', '.emailAndSms').val() === '1') {
         $('input[value=Email]', '.cbFormData').click();
     } else {
         $('input[value=SMS]', '.cbFormData').click();
@@ -41,24 +65,30 @@
         const messageSw = $('input[name=send]:checked', '.emailAndSms').val();
         if (messageSw === '1') {
             $('input[value=Email]', '.cbFormData').click();
-            $('#InsertRecordEmail').val('');
-            $('#InsertRecordCellPhone').val('');
         } else {
             $('input[value=SMS]', '.cbFormData').click();
-            $('#InsertRecordEmail').val('');
-            $('#InsertRecordCellPhone').val('');
         }
-    });*/
+    });
 
     $('#continueButton').click(function (event) {
-        $('.lastNameError').hide();
+        $('#firstNameError').hide();
+        $('#lastNameError').hide();
+        $('.errorContainer').hide();
         $('#dateError').hide();
         $('#formatDateError').hide();
+        $('#emailError').hide();
+        $('#formatEmailError').hide();
         $('#cellphoneError').hide();
         $('#formatCellphoneError').hide();
         let sw = false;
-        if ($('#InsertRecordLastName').val() === '') {
-            $('.lastNameError').show();
+        if ($('#firstName').val() === '') {
+            $('.errorContainer').show();
+            $('#firstNameError').show();
+            sw = true;
+        }
+        if ($('#lastName').val() === '') {
+            $('.errorContainer').show();
+            $('#lastNameError').show();
             sw = true;
         }
         if ($('#InsertRecordDOB').val() === '') {
@@ -68,6 +98,13 @@
             $('#formatDateError').show();
             sw = true;
         }
+        if ($('#InsertRecordEmail').val() === '') {
+            $('#emailError').show();
+            sw = true;
+        } else if (!isValidEmail($('#InsertRecordEmail').val())) {
+            $('#formatEmailError').show();
+            sw = true;
+        }
         if ($('#InsertRecordCellPhone').val() === '') {
             $('#cellphoneError').show();
             sw = true;
@@ -75,30 +112,12 @@
             $('#formatCellphoneError').show();
             sw = true;
         }
-        /*const messageSw = $('input[name=send]:checked', '.emailAndSms').val();
-        if (messageSw === '1' && $('#InsertRecordEmail').val() == '') {
-                $('.emailError').show();
-                sw = true;
-        }else if (messageSw === '2' && $('#InsertRecordCellPhone').val() == '') {
-            $('.cellphoneError').show();
-            sw = true;
-        }
+        // if (!sw && $("input[id^='cbParamVirtual2_']").val() != '') {
+        //     alert('This email is already in use');
+        //     sw = true;
+        // }
         if (!sw) {
-            if (messageSw === '1' && $("input[id^='cbParamVirtual2_']").val() == '') {
-                alert('User does not exist');
-                sw = true;
-            }else if (messageSw === '2' && $("input[id^='cbParamVirtual3_']").val() == '') {
-                alert('User does not exist');
-                sw = true;
-            }
-        }*/
-        if (!sw) {
-            if ($("input[id^='cbParamVirtual4_']").val() == '0') {
-                alert('There is no existing record with the information provided. Please, register first to continue with the treatment process');
-                location.href ="https://dev2.helixvm.com/register-3/";
-            }else {
-                $('.cbSubmitButton').click();
-            }
+            $('.cbSubmitButton').click();
         }
     });
 </script>

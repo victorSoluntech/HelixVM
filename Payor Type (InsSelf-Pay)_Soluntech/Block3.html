@@ -1,0 +1,27 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    $("div[class^='cbHTMLBlockContainer cbFormData cbFormBlock2_']").hide()
+    $("div[class^='cbFormLabelCell cbFormLabel cbFormBlock3']").hide();
+    $("div[class^='cbFormFieldCell cbFormBlock4']").hide();
+    $("div[class^='cbFormLabelCell cbFormLabel cbFormBlock5_']").hide();
+    $("div[class^='cbFormFieldCell cbFormBlock6_']").hide();
+    $('.cbUpdateButton').hide();
+
+    if ($('input[name=send]:checked', '.emailAndSms').val() === '1') {
+        $('input[value=Insurance]', '.cbFormData').click();
+    } else {
+        $('input[value=Self-Pay]', '.cbFormData').click();
+    }
+    $('.emailAndSms').on('change', function (event) {
+        const messageSw = $('input[name=send]:checked', '.emailAndSms').val();
+        if (messageSw === '1') {
+            $('input[value=Insurance]', '.cbFormData').click();
+        } else {
+            $('input[value=Self-Pay]', '.cbFormData').click();
+        }
+    });
+    $('#continueButton').click(function (event) {
+        $('.cbUpdateButton').click();
+    });
+</script>

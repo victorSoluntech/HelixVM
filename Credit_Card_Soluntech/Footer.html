@@ -1,0 +1,42 @@
+<script>
+    var field = 'EditRecordCreditCardNumber';
+
+    var input = document.querySelector('#' + field);
+    input.maxLength = 16;
+    input.onkeyup = telephize
+    input.onkeydown = telephize
+
+    function telephize(v_e) {
+        // this.value = this.value.replace( /\D+/g, "" ).replace( /([0-9]{1,3})([0-9]{3})([0-9]{4}$)/gi, "($1) $2-$3" ); //mask numbers (xxx) xxx-xxxx
+        
+        v_e = v_e || window.event;
+        if (v_e.keyCode >= 65 && v_e.keyCode <= 90) {
+            this.value = this.value.substr(0, this.value.length - 1);
+            return false;
+        } else if (v_e.keyCode >= 37 && v_e.keyCode <= 40) {
+            return true;
+        }
+        var v_value = (this.value.replace(/[^\d]/g, ''));
+        if (v_value.length == 16) {
+            this.value = (v_value.substring(0, 4) + " " + v_value.substring(4, 8) + " " + v_value.substring(8, 12) + " " + v_value.substring(12, 16));
+        } else if ((v_value.substring(0, 2) == "34" || v_value.substring(0, 2) == "37") && v_value.length == 15) {
+            this.value = (v_value.substring(0, 4) + " " + v_value.substring(4, 10) + " " + v_value.substring(10, 15));
+        };
+    }
+
+    document.addEventListener('BeforeFormSubmit', function (e) {
+        if (e.detail.appKey == 'e627b00032f18cbf97e24f52a38a') {
+            e.preventDefault();
+            var form = document.querySelector('form[action*="e627b00032f18cbf97e24f52a38a"] ');
+            var cc = form.querySelector('[name="EditRecordCreditCardNumber"]');
+
+            if (cc.value.length >= 14) {
+                //document.forms["caspioform"].submit(); 
+                form.submit();
+            } else {
+                alert('Please input a valid Credit Card Number');
+                cc.focus();
+            }
+        }
+    });
+</script>
