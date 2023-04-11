@@ -59,37 +59,4 @@
         $('#ZipError').hide();
         $('.errorContainer').hide();
     }
-    $('.cbUpdateButton').hide();
-
-
-    $('#continueButton').click(function (event) {
-        $('#Address1Error').hide();
-        $('#CityError').hide();
-        $('#StateError').hide();
-        $('#ZipError').hide();
-        $('.errorContainer').hide();
-        
-        let sw = false;
-        if ($('#EditRecordAddress_Address1').val() === '') {
-            $('#Address1Error').show();
-            sw = true;
-        }
-        if ($('#EditRecordAddress_City').val() === '') {
-            $('#CityError').show();
-            sw = true;
-        }
-        if ($('#EditRecordAddress_State').val() === '') {
-            $('.errorContainer').show();
-            $('#StateError').show();
-            sw = true;
-        }
-        if ($('#EditRecordAddress_Zip').val() === '') {
-            $('.errorContainer').show();
-            $('#ZipError').show();
-            sw = true;
-        }
-        if (!sw) {
-            $('.cbUpdateButton').click();
-        }
-    });
 </script>

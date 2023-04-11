@@ -1,0 +1,72 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    function isDateTwoYearsOld(dateString) {
+        // Create a Date object from the input string
+        const date = new Date(dateString);
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Calculate the difference between the current date and the input date in milliseconds
+        const difference = currentDate.getTime() - date.getTime();
+
+        // Convert the difference to years
+        const yearsDifference = difference / (1000 * 60 * 60 * 24 * 365.25);
+
+        // Check if the difference is at least 2 years
+        if (yearsDifference >= 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function isValidDate(dateString) {
+        const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+        return datePattern.test(dateString);
+    }
+    function formatDate(input) {
+        let date = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        let formattedDate = '';
+
+        // Add leading zeroes for month and day if needed
+        if (date.length > 0) {
+            formattedDate = date.slice(0, 2);
+            if (formattedDate < 10 && formattedDate[0] !== '0' && formattedDate[0] !== '1') {
+                formattedDate = '0' + formattedDate;
+            }
+        }
+
+        if (date.length > 2) {
+            formattedDate += '/' + date.slice(2, 4);
+        }
+
+        if (date.length > 4) {
+            formattedDate += '/' + date.slice(4, 8);
+        }
+
+        input.value = formattedDate; // Update input value
+    }
+    
+    let DOB = $("input[id^='EditRecordDOB_']");
+    DOB.attr('oninput', 'formatDate(this)');
+    $('.cbUpdateButtonContainer').hide();
+
+    $('#continueButton').click(function (event) {
+        let sw = false;
+        if (DOB.val() === '') {
+            sw = true;
+            alert('Date of Birth is required');
+        } else if (!isValidDate($('#InsertRecordDOB').val())) {
+            alert('Insert a valid Date')
+            sw = true;
+        }
+        if (!sw) {
+            if (!isDateTwoYearsOld(DOB.val())) {
+                alert('The user must be 2 years old or more')
+            } else {
+                $('.cbUpdateButton').click();
+            }
+        }
+    });
+</script>

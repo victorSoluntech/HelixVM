@@ -1,0 +1,14 @@
+<style>
+    @media only screen and (max-width: 767px) {
+        .cbFormNestedTableContainer {
+            display: block !important;
+        }
+    }
+</style>
+<script type="text/javascript">
+    document.addEventListener('DataPageReady', function () {
+        document.querySelectorAll('div[class^="cbUpdateButtonContainer"]').forEach(function (i) {
+            i.style.display = "none";
+        });
+    }); 
+</script>

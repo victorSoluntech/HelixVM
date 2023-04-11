@@ -1,6 +1,49 @@
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script>
+    function isDateTwoYearsOld(dateString) {
+        // Create a Date object from the input string
+        const date = new Date(dateString);
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Calculate the difference between the current date and the input date in milliseconds
+        const difference = currentDate.getTime() - date.getTime();
+
+        // Convert the difference to years
+        const yearsDifference = difference / (1000 * 60 * 60 * 24 * 365.25);
+
+        // Check if the difference is at least 2 years
+        if (yearsDifference >= 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function formatDate(input) {
+        let date = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        let formattedDate = '';
+
+        // Add leading zeroes for month and day if needed
+        if (date.length > 0) {
+            formattedDate = date.slice(0, 2);
+            if (formattedDate < 10 && formattedDate[0] !== '0' && formattedDate[0] !== '1') {
+                formattedDate = '0' + formattedDate;
+            }
+        }
+
+        if (date.length > 2) {
+            formattedDate += '/' + date.slice(2, 4);
+        }
+
+        if (date.length > 4) {
+            formattedDate += '/' + date.slice(4, 8);
+        }
+
+        input.value = formattedDate; // Update input value
+    }
+    $('#InsertRecordDOB').attr('oninput', 'formatDate(this)');
     function isValidPhoneNumber(phoneNumber) {
         const regex = /^\(\d{3}\) \d{3}-\d{4}$/;
         return regex.test(phoneNumber);
@@ -14,9 +57,9 @@
         let formattedNumber = digits.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
         input.value = formattedNumber;
     }
-    $('#InsertRecordCellPhone').attr('type', 'tel');
+    //$('#InsertRecordCellPhone').attr('type', 'tel');
     $('#InsertRecordCellPhone').attr('oninput', 'formatPhoneNumber(this)');
-    if ($('#caspioform .cbFormCommonError').length == 0){
+    if ($('#caspioform .cbFormCommonError').length == 0) {
         $('.lastNameError').hide();
         $('#dateError').hide();
         $('#formatDateError').hide();
@@ -93,11 +136,15 @@
             }
         }*/
         if (!sw) {
-            if ($("input[id^='cbParamVirtual4_']").val() == '0') {
-                alert('There is no existing record with the information provided. Please, register first to continue with the treatment process');
-                location.href ="https://dev2.helixvm.com/register-3/";
-            }else {
-                $('.cbSubmitButton').click();
+            if (!isDateTwoYearsOld($('#InsertRecordDOB').val())) {
+                alert('The user must be 2 years old or more')
+            } else {
+                if ($("input[id^='cbParamVirtual4_']").val() == '0') {
+                    alert('There is no existing record with the information provided. Please, register first to continue with the treatment process');
+                    location.href = "https://dev2.helixvm.com/register-3/";
+                } else {
+                    $('.cbSubmitButton').click();
+                }
             }
         }
     });

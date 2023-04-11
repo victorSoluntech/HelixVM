@@ -181,8 +181,14 @@
 
     function act(button) {
         but = document.getElementById(button);
-        setButtonColor(button);
-        setTimeRange(but.dataset.start, but.dataset.sap, but.dataset.end, but.dataset.eap);
+        if (hasClass(but,'mygreenbutton')) {
+            document.getElementById("EditRecordPreferredAppointmentTime").value = '';
+            $('#continueButton').prop('disabled', !isFormComplete());
+            setButtonColor(button);
+        } else {
+            setButtonColor(button);
+            setTimeRange(but.dataset.start, but.dataset.sap, but.dataset.end, but.dataset.eap);
+        }
     }
 
 
@@ -216,7 +222,9 @@
     function displayButtons(openTime) {
 
     }
-
+    function hasClass(element, clsName) {
+        return (' ' + element.className + ' ').indexOf(' ' + clsName + ' ') > -1;
+    }
     /*Makes the selected button green and all other buttons grey*/
     function setButtonColor(buttonID) {
 

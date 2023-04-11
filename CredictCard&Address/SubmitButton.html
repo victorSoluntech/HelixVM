@@ -1,0 +1,179 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
+    </script>
+<div class="buttonContainer">
+    <button class="continueButton" id="continueButton" type="button">Continue</button>
+</div>
+<style>
+    .continueButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        border-radius: 8px;
+        width: 132px;
+        height: 44px;
+        border-width: 0;
+        background-color: #0C4C91;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 21px;
+    }
+
+    .buttonContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+
+    }
+</style>
+<script>
+    function isValidCreditCardNumber(cardNumber) {
+        cardNumber = cardNumber.replace(/\D/g, '');
+        if (cardNumber.length < 13 || cardNumber.length > 19) {
+            return false;
+        }
+        var digits = cardNumber.split('').reverse().map(Number);
+        var sum = digits.reduce(function (total, digit, index) {
+            if (index % 2 === 1) {
+                digit *= 2;
+                if (digit > 9) {
+                    digit -= 9;
+                }
+            }
+            return total + digit;
+        }, 0);
+        return sum % 10 === 0;
+    }
+    function isAmex(cardNumber) {
+        return /^3[47][0-9]{13}$/.test(cardNumber.replace(/\D/g, ''));
+    }
+    function isValidCvv(cardNumber, cvv) {
+        const cvvPattern = isAmex(cardNumber) ? /^[0-9]{4}$/ : /^[0-9]{3}$/;
+        return cvvPattern.test(cvv);
+    }
+    function isValidMonth(month) {
+        // Remove all non-numeric characters
+        const numericMonth = month.replace(/\D/g, '');
+
+        // Check if month is a valid number between 1 and 12
+        const monthNumber = Number(numericMonth);
+        if (monthNumber < 1 || monthNumber > 12) {
+            return false;
+        }
+
+        return true;
+    }
+    function isValidYear(year) {
+        if (!/^\d{2}$/.test(year)) { // Check if year is 2 digits
+            return false;
+        }
+        return true;
+    }
+    function isValidDate(month, year) {
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
+        if ((currentYear == Number(year) && Number(month) < currentMonth) || year < currentYear) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    document.getElementById('continueButton').addEventListener('click', function () {
+        let arr = Array.from(document.querySelectorAll('div[class^="cbUpdateButton"]>input'));
+
+        $('#Address1Error').hide();
+        $('#CityError').hide();
+        $('#StateError').hide();
+        $('#ZipError').hide();
+        $('.errorContainer').hide();
+        $('#creditCardError').hide();
+        $('#formatCreditCardError').hide();
+        $('#cardMonthError').hide();
+        $('#formatCardMonthError').hide();
+        $('#cardYearError').hide();
+        $('#formatCardYearError').hide();
+        $('#cardCVVError').hide();
+        $('#formatCardCVVError').hide();
+        $('#cardNameError').hide();
+
+        let sw = false;
+
+        const ccNumber = $('#EditRecordCreditCardNumber').val();
+        const ccMonth = $('#cbParamVirtual1').val();
+        const ccYear = $('#cbParamVirtual2').val();
+        const ccCVV = $('#EditRecordSecurityCode').val();
+        const ccName = $('#EditRecordNameOnCard').val();
+        const address1 = $('#EditRecordAddress_Address1').val();
+        const city = $('#EditRecordAddress_City').val();
+        const state = $('#EditRecordAddress_State').val();
+        const zip = $('#EditRecordAddress_Zip').val();
+
+        if (ccNumber === '') {
+            $('#creditCardError').show();
+            sw = true;
+        } else if (!isValidCreditCardNumber(ccNumber)) {
+            $('#formatCreditCardError').show();
+            sw = true;
+        } else if (ccCVV != '' && !isValidCvv(ccNumber, ccCVV)) {
+            $('#formatCardCVVError').show();
+            sw = true;
+        }
+        if (ccMonth === '') {
+            $('#cardMonthError').show();
+            sw = true;
+        } else if (!isValidMonth(ccMonth)) {
+            $('#formatCardMonthError').show();
+            sw = true;
+        }
+        if (ccYear === '') {
+            $('#cardYearError').show();
+            sw = true;
+        } else if (!isValidYear(ccYear)) {
+            $('#formatCardYearError').show();
+            sw = true;
+        }
+        if (ccCVV === '') {
+            $('#cardCVVError').show();
+            sw = true;
+        }
+        if (ccName === '') {
+            $('#cardNameError').show();
+            sw = true;
+        }
+
+        if (address1 === '') {
+            $('#Address1Error').show();
+            sw = true;
+        }
+        if (city === '') {
+            $('#CityError').show();
+            sw = true;
+        }
+        if (state === '') {
+            $('.errorContainer').show();
+            $('#StateError').show();
+            sw = true;
+        }
+        if (zip === '') {
+            $('.errorContainer').show();
+            $('#ZipError').show();
+            sw = true;
+        }
+        if (!sw) {
+            if (!isValidDate(ccMonth, '20' + ccYear)) {
+                alert('Invalid month and year, Date can not be in the past.');
+            } else {
+                document.addEventListener('FormSubmitted', function (event) {
+                    location.href =`https://dev2.helixvm.com/helix-financial-policy`;
+                });
+                arr.forEach(function (elem) {
+                    elem.click();
+                });
+            }
+        }
+    }); 
+</script>
