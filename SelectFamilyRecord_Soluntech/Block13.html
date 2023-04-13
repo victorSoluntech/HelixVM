@@ -47,26 +47,58 @@
 
         input.value = formattedDate; // Update input value
     }
-    
+
+    let option = $("select[name='EditRecordPatientID']");
     let DOB = $("input[id^='EditRecordDOB_']");
     DOB.attr('oninput', 'formatDate(this)');
-    $('.cbUpdateButtonContainer').hide();
+    // $('.cbUpdateButtonContainer').append('<div class="buttonContainer"><button class="continueButton" id="continueButton" type="button">Continue</button></div>');
+    $('.cbUpdateButton').hide();
+    //$('.cbUpdateButtonContainer').hide();
 
-    $('#continueButton').click(function (event) {
-        let sw = false;
-        if (DOB.val() === '') {
-            sw = true;
-            alert('Date of Birth is required');
-        } else if (!isValidDate($('#InsertRecordDOB').val())) {
-            alert('Insert a valid Date')
-            sw = true;
-        }
-        if (!sw) {
-            if (!isDateTwoYearsOld(DOB.val())) {
-                alert('The user must be 2 years old or more')
-            } else {
-                $('.cbUpdateButton').click();
-            }
-        }
-    });
+    // $('#continueButton').click(function (event) {
+
+    //     if (option.find(":selected").text() == 'Add New Patient/Family Member') {
+    //         let sw = false;
+    //         if (DOB.val() === '') {
+    //             sw = true;
+    //             alert('Date of Birth is required');
+    //         } else if (!isValidDate(DOB.val())) {
+    //             alert('Insert a valid Date')
+    //             sw = true;
+    //         }
+    //         if (!sw) {
+    //             if (!isDateTwoYearsOld(DOB.val())) {
+    //                 alert('The user must be 2 years old or more')
+    //             } else {
+    //                 $('.cbUpdateButton').click();
+    //             }
+    //         }
+    //     }else {
+    //         $('.cbUpdateButton').click();
+    //     }
+    // });
 </script>
+<style>
+    .continueButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        border-radius: 8px;
+        width: 132px;
+        height: 44px;
+        border-width: 0;
+        background-color: #0C4C91;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 21px;
+    }
+
+    .buttonContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+
+    }
+</style>

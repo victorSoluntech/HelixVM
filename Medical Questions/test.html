@@ -1,0 +1,57 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    document.addEventListener('DataPageReady', function (ev) {
+        const uniqueSuffix = event.detail.uniqueSuffix
+        const appKey = event.detail.appKey
+        //if (appKey != "e627b000bf747c06bf064f828fa3") return
+
+        const data = [
+            {
+                name: "AllergiesPrompt",
+                title: "AllergiesPrompt",
+                src: "https://c1hcq004.caspio.com/dp/e627b0001b2f84824f664a04a051/emb",
+            }, {
+                name: "MedicationsPrompt",
+                title: "Medications Prompt",
+                src: "https://c1hcq004.caspio.com/dp/e627b0008ca1226fa3c74a888410/emb",
+            }, {
+                name: "FamilyHistoryPrompt",
+                title: "FamilyHistoryPrompt",
+                src: "https://c1hcq004.caspio.com/dp/e627b000add00067b44140429909/emb",
+            }, {
+                name: "PersonalHistoryPrompt",
+                title: "PersonalHistoryPrompt",
+                src: "https://c1hcq004.caspio.com/dp/e627b0008ad3263498e641e89922/emb]",
+            }, {
+                name: "SurgeryPrompt",
+                title: "SurgeryHistoryPrompt",
+                src: "https://c1hcq004.caspio.com/dp/e627b0007ffc03dc77ae4212a186/emb",
+            }, {
+                name: "Alcohol",
+                title: "Alcohol",
+                src: "https://c1hcq004.caspio.com/dp/e627b000841af3e589804a2daa3c/emb",
+            }, {
+                name: "SmokerCurrent",
+                title: "SmokerCurrent",
+                src: "https://c1hcq004.caspio.com/dp/e627b0002276123d9bf941d9ab13/emb",
+            }, {
+                name: "SmokerPrevious",
+                title: "SmokerPrevious",
+                src: "https://c1hcq004.caspio.com/dp/e627b0007ed558bac4f448188b36/emb",
+            }
+        ];
+
+        for (const datapage of data) {
+            let script = document.createElement('script');
+            script.type = "text/javascript";
+            script.id = datapage.name;
+            if ($(`#${datapage.name}`).length === 0) {
+                script.src = datapage.src;
+                const secondaryDisplayContainer = document.getElementById("secondaryDisplay")
+                secondaryDisplayContainer.appendChild(script);
+            }
+        }
+    });
+
+</script>

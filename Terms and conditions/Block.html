@@ -1,0 +1,92 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+<div class="customPolicytermsContainer">
+    <div class="cbFormLabelCell cbFormLabel " data-cb-cell-name="policyTermsLabel"><label for="policyTermsLabel">I have
+            read and understand the policy, terms, and conditions of HelixVM.</label></div>
+
+    <div class="cbFormFieldCell "><span data-cb-name="cbFormDataCheckbox" class="cbFormData"><input type="checkbox"
+                name="policyTermsCheckbox" id="policyTermsCheckbox" value="Y" checked="checked"> <label
+                for="policyTermsCheckbox">&nbsp;</label><input type="hidden" name="policyTermsCheckbox"
+                value="Y"></span></div>
+
+
+</div>
+<style>
+    .customPolicytermsContainer {
+        display: flex;
+    }
+
+    .cbFormData {
+        position: relative;
+        display: inline-block;
+        width: 99px;
+        height: 48px;
+        margin-right: 10px;
+    }
+
+    .cbFormData input[type=checkbox] {
+        display: none;
+    }
+
+    .cbFormData label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 99px;
+        height: 48px;
+        background-color: #F5F6F7;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+    }
+
+    .cbFormData label:after {
+        content: 'Yes';
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 43px;
+        height: 40px;
+        background-color: #6CBE4B;
+        color: #FFFFFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .cbFormData label:before {
+        content: "No";
+        position: absolute;
+        top: 4px;
+        left: 57px;
+        width: 38px;
+        height: 40px;
+        display: flex;
+        border-radius: 8px;
+        justify-content: center;
+        align-items: center;
+        color: #797F83;
+    }
+
+    .cbFormData input[type=checkbox]:checked+label:after {
+        background-color: #F5F6F7;
+        color: #797F83;
+    }
+
+    .cbFormData input[type=checkbox]:checked+label::before {
+        background-color: #6CBE4B;
+        color: #FFFFFF;
+    }
+
+    .cbFormData input[type=hidden] {
+        display: none;
+    }
+</style>

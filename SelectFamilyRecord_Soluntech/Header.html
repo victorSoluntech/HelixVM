@@ -1,0 +1,110 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    function isDateTwoYearsOld(dateString) {
+        // Create a Date object from the input string
+        const date = new Date(dateString);
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Calculate the difference between the current date and the input date in milliseconds
+        const difference = currentDate.getTime() - date.getTime();
+
+        // Convert the difference to years
+        const yearsDifference = difference / (1000 * 60 * 60 * 24 * 365.25);
+
+        // Check if the difference is at least 2 years
+        if (yearsDifference >= 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function isValidDate(dateString) {
+        const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+        return datePattern.test(dateString);
+    }
+
+    document.addEventListener('DataPageReady', function (ev) {
+        if ($("input[id^=xip_datasrc_Tracking]").length > 0) {
+
+            $("input[id^=xip_datasrc_Tracking]").click();
+        }
+        const uniqueSuffix = event.detail.uniqueSuffix
+        const select = $(`#EditRecordPatientID${uniqueSuffix}`)
+        const familySelectContainer = $("#familySelectContainer");
+
+        select.change(function (ev) {
+            if (select.val() === "") {
+                familySelectContainer.show()
+            } else {
+                familySelectContainer.hide()
+            }
+        })
+
+        if (select.val() === "") {
+            familySelectContainer.show()
+        } else {
+            familySelectContainer.hide()
+        }
+        let nextPageVal
+        if ($(`#EditRecordEncounterType`).val() === "f2f") {
+            nextPageVal = "../appointment"
+        } else {
+            nextPageVal = "../reason-for-visit/"
+        }
+
+        const form = $(`form[action^='https://c1hcq004.caspio.com/dp/${ev.detail.appKey}']`)
+        const button = form.find("input[type='submit']")
+        button.hide();
+        const buttonContainer = button.parent();
+        if ($("#customBtn").length === 0) {
+            buttonContainer.append(`
+            <div>
+                <button id="customBtn" class="cbLoginButton">CONTINUE</button>
+            </div>
+            `)
+        }
+        const customBtn = $("#customBtn");
+        customBtn.click(function (event) {
+
+            let option = $("select[name='EditRecordPatientID']");
+            let DOB = $("input[id^='EditRecordDOB_']");
+            let relationship = $("#EditRecordChildRelation");
+
+            event.preventDefault();
+            $("#EditRecordNextPage").val(nextPageVal);
+            if (option.find(":selected").text() == 'Add New Patient/Family Member') {
+                let sw = false;
+                if (DOB.val() === '') {
+                    sw = true;
+                    alert('Date of Birth is required');
+                } else if (!isValidDate(DOB.val())) {
+                    sw = true;
+                    alert('Insert a valid Date')
+                }
+                if (relationship.find(":selected").text() == 'Please Select') {
+                    sw = true;
+                    alert('Select a relationship.')
+                }
+                if (!sw) {
+                    if (!isDateTwoYearsOld(DOB.val())) {
+                        alert('The user must be 2 years old or more')
+                    } else {
+                        form.submit();
+                    }
+                }
+            } else {
+                form.submit();
+            }
+        })
+
+    })
+    document.addEventListener('FormSubmitted', function () {
+        if ($("div[id^=HeaderErrorMsg_]").length > 0) {
+            alert("the login credentials are incorrect")
+            // window.location.replace("https://dev2.helixvm.com/homepage/")
+        }
+    })
+</script>

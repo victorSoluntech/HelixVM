@@ -82,7 +82,7 @@
     $('#cbParamVirtual1').on("focusout", function (event) {
         formatCreditCardMonthOut(event.currentTarget);
     });
-    $('#cbParamVirtual2').attr('oninput', 'formatCreditCardYear(this)');
+    $('#cbParamVirtual2').attr('oninput', 'formatCreditCardYearIn(this)');
     $('#cbParamVirtual2').on("focusout", function (event) {
         formatCreditCardYearOut(event.currentTarget);
     });
