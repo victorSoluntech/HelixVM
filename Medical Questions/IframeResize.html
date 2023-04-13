@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.min.js"
     type='text/javascript'></script>
 <iframe name="AllergiesPrompt" title="AllergiesPrompt" style="width: 100%;"
@@ -81,7 +83,10 @@
     function QuestionsContinue(event) {
         console.log('Navigation needed');
     }
-
+    const EncounterType = (new URLSearchParams(window.location.search)).get('EncType');
+    $('#QuestionsContinue').click(function (event) {
+        window.location.href = `https://dev2.helixvm.com/succesful-register/?EncType=${EncounterType}`;
+    });
 
 </script>
 

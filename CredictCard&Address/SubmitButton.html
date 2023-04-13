@@ -112,6 +112,8 @@
         const state = $('#EditRecordAddress_State').val();
         const zip = $('#EditRecordAddress_Zip').val();
 
+        const EncounterType = $("input[name='cbParamVirtual6']").val();
+
         if (ccNumber === '') {
             $('#creditCardError').show();
             sw = true;
@@ -168,7 +170,7 @@
                 alert('Invalid month and year, Date can not be in the past.');
             } else {
                 document.addEventListener('FormSubmitted', function (event) {
-                    location.href =`https://dev2.helixvm.com/helix-financial-policy`;
+                    location.href =`https://dev2.helixvm.com/helix-financial-policy/?EncType=${EncounterType}`;
                 });
                 arr.forEach(function (elem) {
                     elem.click();
