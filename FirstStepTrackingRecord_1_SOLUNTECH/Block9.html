@@ -1,6 +1,25 @@
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script>
+document.addEventListener('DataPageReady', function (ev) {
+            const contactMethodField = $("#InsertRecordContactMethod")
+            $("#emailRadio").change(function (params) {
+                if (this.checked) {
+                    contactMethodField.val("Email")
+                }
+            })
+            $("#smsRadio").change(function (params) {
+                if (this.checked) {
+                    contactMethodField.val("SMS")
+                }
+            })
+            if (document.getElementById("emailRadio").checked) {
+                contactMethodField.val("Email")
+            } else {
+                contactMethodField.val("SMS")
+            }
+
+        })
     function isDateTwoYearsOld(dateString) {
         // Create a Date object from the input string
         const date = new Date(dateString);
@@ -156,7 +175,7 @@
         // }
         if (!sw) {
             if (!isDateTwoYearsOld($('#InsertRecordDOB').val())) {
-                alert('The user must be 2 years old or more')
+                alert('The patient must be at least 2 years old')
             } else {
                 $('.cbSubmitButton').click();
             }

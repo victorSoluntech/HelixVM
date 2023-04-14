@@ -1,81 +1,106 @@
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+  crossorigin="anonymous"
+></script>
 <script>
-    function isDateTwoYearsOld(dateString) {
-        // Create a Date object from the input string
-        const date = new Date(dateString);
-
-        // Get the current date
-        const currentDate = new Date();
-
-        // Calculate the difference between the current date and the input date in milliseconds
-        const difference = currentDate.getTime() - date.getTime();
-
-        // Convert the difference to years
-        const yearsDifference = difference / (1000 * 60 * 60 * 24 * 365.25);
-
-        // Check if the difference is at least 2 years
-        if (yearsDifference >= 2) {
-            return true;
-        } else {
-            return false;
-        }
+  document.addEventListener("DataPageReady", function (ev) {
+    const contactMethodField = $("#InsertRecordContactMethod");
+    $("#emailRadio").change(function (params) {
+      if (this.checked) {
+        contactMethodField.val("Email");
+      }
+    });
+    $("#smsRadio").change(function (params) {
+      if (this.checked) {
+        contactMethodField.val("SMS");
+      }
+    });
+    if (document.getElementById("emailRadio").checked) {
+      contactMethodField.val("Email");
+    } else {
+      contactMethodField.val("SMS");
     }
-    function formatDate(input) {
-        let date = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
-        let formattedDate = '';
+  });
+  function isDateTwoYearsOld(dateString) {
+    // Create a Date object from the input string
+    const date = new Date(dateString);
 
-        // Add leading zeroes for month and day if needed
-        if (date.length > 0) {
-            formattedDate = date.slice(0, 2);
-            if (formattedDate < 10 && formattedDate[0] !== '0' && formattedDate[0] !== '1') {
-                formattedDate = '0' + formattedDate;
-            }
-        }
+    // Get the current date
+    const currentDate = new Date();
 
-        if (date.length > 2) {
-            formattedDate += '/' + date.slice(2, 4);
-        }
+    // Calculate the difference between the current date and the input date in milliseconds
+    const difference = currentDate.getTime() - date.getTime();
 
-        if (date.length > 4) {
-            formattedDate += '/' + date.slice(4, 8);
-        }
+    // Convert the difference to years
+    const yearsDifference = difference / (1000 * 60 * 60 * 24 * 365.25);
 
-        input.value = formattedDate; // Update input value
+    // Check if the difference is at least 2 years
+    if (yearsDifference >= 2) {
+      return true;
+    } else {
+      return false;
     }
-    $('#InsertRecordDOB').attr('oninput', 'formatDate(this)');
-    function isValidPhoneNumber(phoneNumber) {
-        const regex = /^\(\d{3}\) \d{3}-\d{4}$/;
-        return regex.test(phoneNumber);
-    }
-    function isValidDate(dateString) {
-        const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
-        return datePattern.test(dateString);
-    }
-    function formatPhoneNumber(input) {
-        let digits = input.value.replace(/\D/g, '');
-        let formattedNumber = digits.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
-        input.value = formattedNumber;
-    }
-    //$('#InsertRecordCellPhone').attr('type', 'tel');
-    $('#InsertRecordCellPhone').attr('oninput', 'formatPhoneNumber(this)');
-    if ($('#caspioform .cbFormCommonError').length == 0) {
-        $('.lastNameError').hide();
-        $('#dateError').hide();
-        $('#formatDateError').hide();
-        $('#cellphoneError').hide();
-        $('#formatCellphoneError').hide();
+  }
+  function formatDate(input) {
+    let date = input.value.replace(/\D/g, ""); // Remove all non-numeric characters
+    let formattedDate = "";
+
+    // Add leading zeroes for month and day if needed
+    if (date.length > 0) {
+      formattedDate = date.slice(0, 2);
+      if (
+        formattedDate < 10 &&
+        formattedDate[0] !== "0" &&
+        formattedDate[0] !== "1"
+      ) {
+        formattedDate = "0" + formattedDate;
+      }
     }
 
-    //$("div[class^='cbFormFieldCell cbFormBlock18_']").hide();
-    //$("div[class^='cbFormFieldCell cbFormBlock19_']").hide();
+    if (date.length > 2) {
+      formattedDate += "/" + date.slice(2, 4);
+    }
 
-    $('.cbSubmitButtonContainer').hide();
+    if (date.length > 4) {
+      formattedDate += "/" + date.slice(4, 8);
+    }
 
-    //$('#tableCont1').children().eq(1).hide();
-    //$('#tableCont2').children().eq(1).hide();
-    $('.cbFormFieldSet span.cbFormData').hide();
-    /*if ($('input[name=send]:checked', '.emailAndSms').val() === '1') {
+    input.value = formattedDate; // Update input value
+  }
+  $("#InsertRecordDOB").attr("oninput", "formatDate(this)");
+  function isValidPhoneNumber(phoneNumber) {
+    const regex = /^\(\d{3}\) \d{3}-\d{4}$/;
+    return regex.test(phoneNumber);
+  }
+  function isValidDate(dateString) {
+    const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+    return datePattern.test(dateString);
+  }
+  function formatPhoneNumber(input) {
+    let digits = input.value.replace(/\D/g, "");
+    let formattedNumber = digits.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+    input.value = formattedNumber;
+  }
+  //$('#InsertRecordCellPhone').attr('type', 'tel');
+  $("#InsertRecordCellPhone").attr("oninput", "formatPhoneNumber(this)");
+  if ($("#caspioform .cbFormCommonError").length == 0) {
+    $(".lastNameError").hide();
+    $("#dateError").hide();
+    $("#formatDateError").hide();
+    $("#cellphoneError").hide();
+    $("#formatCellphoneError").hide();
+  }
+
+  //$("div[class^='cbFormFieldCell cbFormBlock18_']").hide();
+  //$("div[class^='cbFormFieldCell cbFormBlock19_']").hide();
+
+  $(".cbSubmitButtonContainer").hide();
+
+  //$('#tableCont1').children().eq(1).hide();
+  //$('#tableCont2').children().eq(1).hide();
+  $(".cbFormFieldSet span.cbFormData").hide();
+  /*if ($('input[name=send]:checked', '.emailAndSms').val() === '1') {
         $('input[value=Email]', '.cbFormData').click();
     } else {
         $('input[value=SMS]', '.cbFormData').click();
@@ -93,32 +118,32 @@
         }
     });*/
 
-    $('#continueButton').click(function (event) {
-        $('.lastNameError').hide();
-        $('#dateError').hide();
-        $('#formatDateError').hide();
-        $('#cellphoneError').hide();
-        $('#formatCellphoneError').hide();
-        let sw = false;
-        if ($('#InsertRecordLastName').val() === '') {
-            $('.lastNameError').show();
-            sw = true;
-        }
-        if ($('#InsertRecordDOB').val() === '') {
-            $('#dateError').show();
-            sw = true;
-        } else if (!isValidDate($('#InsertRecordDOB').val())) {
-            $('#formatDateError').show();
-            sw = true;
-        }
-        if ($('#InsertRecordCellPhone').val() === '') {
-            $('#cellphoneError').show();
-            sw = true;
-        } else if (!isValidPhoneNumber($('#InsertRecordCellPhone').val())) {
-            $('#formatCellphoneError').show();
-            sw = true;
-        }
-        /*const messageSw = $('input[name=send]:checked', '.emailAndSms').val();
+  $("#continueButton").click(function (event) {
+    $(".lastNameError").hide();
+    $("#dateError").hide();
+    $("#formatDateError").hide();
+    $("#cellphoneError").hide();
+    $("#formatCellphoneError").hide();
+    let sw = false;
+    if ($("#InsertRecordLastName").val() === "") {
+      $(".lastNameError").show();
+      sw = true;
+    }
+    if ($("#InsertRecordDOB").val() === "") {
+      $("#dateError").show();
+      sw = true;
+    } else if (!isValidDate($("#InsertRecordDOB").val())) {
+      $("#formatDateError").show();
+      sw = true;
+    }
+    if ($("#InsertRecordCellPhone").val() === "") {
+      $("#cellphoneError").show();
+      sw = true;
+    } else if (!isValidPhoneNumber($("#InsertRecordCellPhone").val())) {
+      $("#formatCellphoneError").show();
+      sw = true;
+    }
+    /*const messageSw = $('input[name=send]:checked', '.emailAndSms').val();
         if (messageSw === '1' && $('#InsertRecordEmail').val() == '') {
                 $('.emailError').show();
                 sw = true;
@@ -135,17 +160,19 @@
                 sw = true;
             }
         }*/
-        if (!sw) {
-            if (!isDateTwoYearsOld($('#InsertRecordDOB').val())) {
-                alert('The user must be 2 years old or more')
-            } else {
-                if ($("input[id^='cbParamVirtual4_']").val() == '0') {
-                    alert('There is no existing record with the information provided. Please, register first to continue with the treatment process');
-                    location.href = "https://dev2.helixvm.com/register-3/";
-                } else {
-                    $('.cbSubmitButton').click();
-                }
-            }
+    if (!sw) {
+      if (!isDateTwoYearsOld($("#InsertRecordDOB").val())) {
+        alert("The patient must be at least 2 years old");
+      } else {
+        if ($("input[id^='cbParamVirtual4_']").val() == "0") {
+          alert(
+            "There is no existing record with the information provided. Please, register first to continue with the treatment process"
+          );
+          location.href = "https://dev2.helixvm.com/register-3/";
+        } else {
+          $(".cbSubmitButton").click();
         }
-    });
+      }
+    }
+  });
 </script>

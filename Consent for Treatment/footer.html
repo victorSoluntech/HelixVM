@@ -1,143 +1,124 @@
 <script>
-    let checked = false
-    document.addEventListener('DataPageReady', function (event) {
-        if (event.detail.appKey != "e627b000ae427e5607af40ba9645") return;
-        if ($('input[name="EditRecordSignature"]').val() === "") {
+  let checked = false;
+  document.addEventListener("DataPageReady", function (event) {
+    if (event.detail.appKey != "e627b000ae427e5607af40ba9645") return;
+    if ($('input[name="EditRecordSignature"]').val() === "") {
+      $("#cb_sign_wrapper").signaturePad({ drawOnly: true });
+    } else {
+      $("#cb_sign_wrapper")
+        .signaturePad({ drawOnly: true })
+        .regenerate($('input[name="EditRecordSignature"]').val());
+    }
 
-            $('#cb_sign_wrapper').signaturePad({ drawOnly: true })
-        } else {
-            $('#cb_sign_wrapper').signaturePad({ drawOnly: true }).regenerate($('input[name="EditRecordSignature"]').val());
+    const form = $(
+      "form[action^='https://c1hcq004.caspio.com/dp/e627b000ae427e5607af40ba9645']"
+    );
+    const button = form.find("input[type='submit']");
+    if ($("#termsContainer").length === 0) {
+      // append after the first container
+      //
+    }
 
-        }
+    $(".financialPolicyLink").click(function () {
+      if ($("#termsFrame").length === 0) {
+        let script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src =
+          "https://c1hcq004.caspio.com/dp/e627b000156e2ea0f3d1495e9bfa/emb";
+        document.getElementById("termsScriptContainer").appendChild(script);
+        $("#termsScriptContainer").css("height", "200px");
+        $("#termsScriptContainer").css("overflow-y", "scroll");
 
-        const form = $("form[action^='https://c1hcq004.caspio.com/dp/e627b000ae427e5607af40ba9645']")
-        const button = form.find("input[type='submit']")
-        if ($("#termsContainer").length === 0) {
+        $(script).on("load", onMyFrameLoad);
+      }
+    });
 
-            // append after the first container
+    function onMyFrameLoad() {}
 
-
-
-
-
-
-            //
-
-        }
-
-        $(".financialPolicyLink").click(function () {
-
-            if ($("#termsFrame").length === 0) {
-                let script = document.createElement('script');
-                script.type = "text/javascript";
-                script.src = "https://c1hcq004.caspio.com/dp/e627b000156e2ea0f3d1495e9bfa/emb"
-                document.getElementById("termsScriptContainer").appendChild(script);
-                $("#termsScriptContainer").css("height", "200px")
-                $("#termsScriptContainer").css("overflow-y", "scroll")
-
-                $(script).on("load", onMyFrameLoad);
-            }
-        })
-
-        function onMyFrameLoad() {
-
-        };
-
-        button.hide();
-        const buttonContainer = button.parent();
-        if ($("#customBtn").length === 0) {
-
-            buttonContainer.append(`
+    button.hide();
+    const buttonContainer = button.parent();
+    if ($("#customBtn").length === 0) {
+      buttonContainer.append(`
             <div>
                 <button id="customBtn" style='margin-top:200px; height:44px;width:132px; background-color:#0C4C91; color:white; border-radius:8px;'>Continue</button>
             </div>
-            `)
+            `);
+    }
+    const customBtn = $("#customBtn");
+    customBtn.click(function (ev) {
+      ev.preventDefault();
+      if ($("#cb_sign_wrapper .output").val() == "") {
+        console.log("Please add a signature");
+      } else {
+        if (checked) {
+          $('input[name="EditRecordSignature"]').val(
+            $("#cb_sign_wrapper .output").val()
+          );
+          form.submit();
+        } else {
+          alert("Pease confirm that you have read the terms and condition");
         }
-        const customBtn = $("#customBtn");
-        customBtn.click(function (ev) {
-            ev.preventDefault();
-            if ($('#cb_sign_wrapper .output').val() == "") {
-                console.log("Please add a signature")
-            } else {
-                if (checked) {
-                    $('input[name="EditRecordSignature"]').val($('#cb_sign_wrapper .output').val());
-                    form.submit();
-                } else {
-                    alert("Please read the policy, terms, and conditions of HelixVM.")
-
-                }
-            }
-        })
+      }
     });
-    // document.addEventListener('DataPageReady', function (event) {
-    //     if (event.detail.appKey != "e627b000415a0188c241482d82fe") return;
-        $("#policyTermsCheckbox").on("change", () => {
-            console.log($("#policyTermsCheckbox").is(':checked'))
-            if (!$("#policyTermsCheckbox").is(':checked')) {
-                checked = true
-            } else {
-                checked = false
-            }
-        });
-    // })
+  });
+  // document.addEventListener('DataPageReady', function (event) {
+  //     if (event.detail.appKey != "e627b000415a0188c241482d82fe") return;
+  $("#policyTermsCheckbox").on("change", () => {
+    console.log($("#policyTermsCheckbox").is(":checked"));
+    if (!$("#policyTermsCheckbox").is(":checked")) {
+      checked = true;
+    } else {
+      checked = false;
+    }
+  });
+  // })
 </script>
 <style>
-    .container {
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 537;
+  }
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 537;
-    }
+  #cb_sign_wrapper {
+    background: #f9fafc;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
 
-    #cb_sign_wrapper {
-        background: #F9FAFC;
-        border-radius: 16px;
-        padding: 20px;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        align-items: center !important;
+  #cb_sign_wrapper canvas {
+    width: 466px;
+    border: 1px dashed #b6c9de !important;
+    border-radius: 16px !important;
+  }
 
-    }
+  .signInTitle {
+    color: #0c4c91;
+    font-size: 16px;
+    font-weight: 600;
+    width: 200px !important;
+    text-align: center !important;
+    margin-bottom: 10px !important;
+  }
 
+  section[id^="cbTable_"] {
+    display: flex !important;
+
+    margin: 0px;
+    width: 500px !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  @media only screen and (max-width: 767px) {
     #cb_sign_wrapper canvas {
-        width: 466px;
-        border: 1px dashed #B6C9DE !important;
-        border-radius: 16px !important;
-
+      width: 266px;
     }
-
-    .signInTitle {
-        color: #0C4C91;
-        font-size: 16px;
-        font-weight: 600;
-        width: 200px !important;
-        text-align: center !important;
-        margin-bottom: 10px !important;
-    }
-
-    section[id^="cbTable_"] {
-        display: flex !important;
-
-        margin: 0px;
-        width: 500px !important;
-        justify-content: center !important;
-        flex-direction: column !important;
-        align-items: center !important;
-
-    }
-
-    @media only screen and (max-width: 767px) {
-
-
-
-
-        #cb_sign_wrapper canvas {
-            width: 266px;
-
-        }
-
-
-    }
+  }
 </style>

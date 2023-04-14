@@ -1,104 +1,110 @@
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+  crossorigin="anonymous"
+></script>
 <script>
-    function isDateTwoYearsOld(dateString) {
-        // Create a Date object from the input string
-        const date = new Date(dateString);
+  function isDateTwoYearsOld(dateString) {
+    // Create a Date object from the input string
+    const date = new Date(dateString);
 
-        // Get the current date
-        const currentDate = new Date();
+    // Get the current date
+    const currentDate = new Date();
 
-        // Calculate the difference between the current date and the input date in milliseconds
-        const difference = currentDate.getTime() - date.getTime();
+    // Calculate the difference between the current date and the input date in milliseconds
+    const difference = currentDate.getTime() - date.getTime();
 
-        // Convert the difference to years
-        const yearsDifference = difference / (1000 * 60 * 60 * 24 * 365.25);
+    // Convert the difference to years
+    const yearsDifference = difference / (1000 * 60 * 60 * 24 * 365.25);
 
-        // Check if the difference is at least 2 years
-        if (yearsDifference >= 2) {
-            return true;
-        } else {
-            return false;
-        }
+    // Check if the difference is at least 2 years
+    if (yearsDifference >= 2) {
+      return true;
+    } else {
+      return false;
     }
-    function isValidDate(dateString) {
-        const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
-        return datePattern.test(dateString);
-    }
-    function formatDate(input) {
-        let date = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
-        let formattedDate = '';
+  }
+  function isValidDate(dateString) {
+    const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+    return datePattern.test(dateString);
+  }
+  function formatDate(input) {
+    let date = input.value.replace(/\D/g, ""); // Remove all non-numeric characters
+    let formattedDate = "";
 
-        // Add leading zeroes for month and day if needed
-        if (date.length > 0) {
-            formattedDate = date.slice(0, 2);
-            if (formattedDate < 10 && formattedDate[0] !== '0' && formattedDate[0] !== '1') {
-                formattedDate = '0' + formattedDate;
-            }
-        }
-
-        if (date.length > 2) {
-            formattedDate += '/' + date.slice(2, 4);
-        }
-
-        if (date.length > 4) {
-            formattedDate += '/' + date.slice(4, 8);
-        }
-
-        input.value = formattedDate; // Update input value
+    // Add leading zeroes for month and day if needed
+    if (date.length > 0) {
+      formattedDate = date.slice(0, 2);
+      if (
+        formattedDate < 10 &&
+        formattedDate[0] !== "0" &&
+        formattedDate[0] !== "1"
+      ) {
+        formattedDate = "0" + formattedDate;
+      }
     }
 
-    let option = $("select[name='EditRecordPatientID']");
-    let DOB = $("input[id^='EditRecordDOB_']");
-    DOB.attr('oninput', 'formatDate(this)');
-    // $('.cbUpdateButtonContainer').append('<div class="buttonContainer"><button class="continueButton" id="continueButton" type="button">Continue</button></div>');
-    $('.cbUpdateButton').hide();
-    //$('.cbUpdateButtonContainer').hide();
+    if (date.length > 2) {
+      formattedDate += "/" + date.slice(2, 4);
+    }
 
-    // $('#continueButton').click(function (event) {
+    if (date.length > 4) {
+      formattedDate += "/" + date.slice(4, 8);
+    }
 
-    //     if (option.find(":selected").text() == 'Add New Patient/Family Member') {
-    //         let sw = false;
-    //         if (DOB.val() === '') {
-    //             sw = true;
-    //             alert('Date of Birth is required');
-    //         } else if (!isValidDate(DOB.val())) {
-    //             alert('Insert a valid Date')
-    //             sw = true;
-    //         }
-    //         if (!sw) {
-    //             if (!isDateTwoYearsOld(DOB.val())) {
-    //                 alert('The user must be 2 years old or more')
-    //             } else {
-    //                 $('.cbUpdateButton').click();
-    //             }
-    //         }
-    //     }else {
-    //         $('.cbUpdateButton').click();
-    //     }
-    // });
+    input.value = formattedDate; // Update input value
+  }
+
+  let option = $("select[name='EditRecordPatientID']");
+  let DOB = $("input[id^='EditRecordDOB_']");
+  DOB.attr("oninput", "formatDate(this)");
+  // $('.cbUpdateButtonContainer').append('<div class="buttonContainer"><button class="continueButton" id="continueButton" type="button">Continue</button></div>');
+  $(".cbUpdateButton").hide();
+  //$('.cbUpdateButtonContainer').hide();
+
+  // $('#continueButton').click(function (event) {
+
+  //     if (option.find(":selected").text() == 'Add New Patient/Family Member') {
+  //         let sw = false;
+  //         if (DOB.val() === '') {
+  //             sw = true;
+  //             alert('Date of Birth is required');
+  //         } else if (!isValidDate(DOB.val())) {
+  //             alert('Insert a valid Date')
+  //             sw = true;
+  //         }
+  //         if (!sw) {
+  //             if (!isDateTwoYearsOld(DOB.val())) {
+  //                 alert('The patient must be at least 2 years old')
+  //             } else {
+  //                 $('.cbUpdateButton').click();
+  //             }
+  //         }
+  //     }else {
+  //         $('.cbUpdateButton').click();
+  //     }
+  // });
 </script>
 <style>
-    .continueButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        border-radius: 8px;
-        width: 132px;
-        height: 44px;
-        border-width: 0;
-        background-color: #0C4C91;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 21px;
-    }
+  .continueButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 8px;
+    width: 132px;
+    height: 44px;
+    border-width: 0;
+    background-color: #0c4c91;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+  }
 
-    .buttonContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-
-    }
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
 </style>
