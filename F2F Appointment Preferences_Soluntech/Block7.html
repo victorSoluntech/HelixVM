@@ -1,77 +1,147 @@
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+  crossorigin="anonymous"
+></script>
 <script>
-    function formatDate(input) {
-        let date = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
-        let formattedDate = '';
+  /*function hasTheClass(element, clsName) {
+    return (" " + element.className + " ").indexOf(" " + clsName + " ") > -1;
+  }*/
+  function formatDate(input) {
+    let date = input.value.replace(/\D/g, ""); // Remove all non-numeric characters
+    let formattedDate = "";
 
-        // Add leading zeroes for month and day if needed
-        if (date.length > 0) {
-            formattedDate = date.slice(0, 2);
-            if (formattedDate < 10 && formattedDate[0] !== '0' && formattedDate[0] !== '1') {
-                formattedDate = '0' + formattedDate;
-            }
-        }
-
-        if (date.length > 2) {
-            formattedDate += '/' + date.slice(2, 4);
-        }
-
-        if (date.length > 4) {
-            formattedDate += '/' + date.slice(4, 8);
-        }
-
-        input.value = formattedDate; // Update input value
+    // Add leading zeroes for month and day if needed
+    if (date.length > 0) {
+      formattedDate = date.slice(0, 2);
+      if (
+        formattedDate < 10 &&
+        formattedDate[0] !== "0" &&
+        formattedDate[0] !== "1"
+      ) {
+        formattedDate = "0" + formattedDate;
+      }
     }
-    function isValidDate(dateString) {
-        const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
-        if (datePattern.test(dateString)) {
-            return !isDateInPast(dateString);
-        } else return false;
+
+    if (date.length > 2) {
+      formattedDate += "/" + date.slice(2, 4);
     }
-    function isDateInPast(dateStr) {
-        // Parse the date string to get the year, month, and day
-        const [month, day, year] = dateStr.split('/').map(Number);
 
-        // Create a new date object for the given date
-        const date = new Date(year, month - 1, day);
-
-        // Create a new date object for today's date
-        const today = new Date();
-
-        // Set the time of today's date to midnight
-        today.setHours(0, 0, 0, 0);
-        // Compare the two dates
-        return date < today;
+    if (date.length > 4) {
+      formattedDate += "/" + date.slice(4, 8);
     }
-    $('#EditRecordPreferredAppointmentDate').on('keydown', function (event) {
-        const key = event.key;
-        if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter" || key === ".") {
-            return true;
-        }
-        if (/\d/.test(key) || key === '/') {
-            return true;
-        }
-        return false;
-    });
-    function isFormComplete() {
-        return $('#EditRecordTimeZone').val() != '' &&
-            $('#EditRecordTimeZone').val() != 'Select Time Zone' &&
-            isValidDate($('#EditRecordPreferredAppointmentDate').val()) &&
-            $('#EditRecordPreferredAppointmentTime').val() != '';
+
+    input.value = formattedDate; // Update input value
+  }
+  function isValidDate(dateString) {
+    const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+    if (datePattern.test(dateString)) {
+      return true; //!isDateInPast(dateString);
+    } else return false;
+  }
+  function isDateInPast(dateStr) {
+    // Parse the date string to get the year, month, and day
+    const [month, day, year] = dateStr.split("/").map(Number);
+
+    // Create a new date object for the given date
+    const date = new Date(year, month - 1, day);
+
+    // Create a new date object for today's date
+    const today = new Date();
+
+    // Set the time of today's date to midnight
+    today.setHours(0, 0, 0, 0);
+    // Compare the two dates
+    return date < today;
+  }
+  $("#EditRecordPreferredAppointmentDate").on("keydown", function (event) {
+    const key = event.key;
+    if (
+      key === "Backspace" ||
+      key === "Delete" ||
+      key === "Tab" ||
+      key === "Escape" ||
+      key === "Enter" ||
+      key === "."
+    ) {
+      return true;
     }
-    $('.cbUpdateButton').hide();
+    if (/\d/.test(key) || key === "/") {
+      return true;
+    }
+    return false;
+  });
+  function isFormComplete() {
+    return (
+      $("#EditRecordTimeZone").val() != "" &&
+      $("#EditRecordTimeZone").val() != "Select Time Zone" &&
+      isValidDate($("#EditRecordPreferredAppointmentDate").val()) &&
+      $("#EditRecordPreferredAppointmentTime").val() != ""
+    );
+  }
 
-    $('#EditRecordPreferredAppointmentDate').attr('oninput', 'formatDate(this)');
+  $(".cbUpdateButton").hide();
+  if ($("#caspioform .cbFormCommonError").length == 0) {
+    $("#tzError").hide();
+    $("#apError").hide();
+    $("#rfvError").hide();
+  }
 
-    $('#continueButton').prop('disabled', !isFormComplete());
+  $("#EditRecordPreferredAppointmentDate").attr("oninput", "formatDate(this)");
+
+  /*$('#continueButton').prop('disabled', !isFormComplete());
     $('#EditRecordTimeZone').on('change', function (event) {
         $('#continueButton').prop('disabled', !isFormComplete());
     });
     $('#EditRecordPreferredAppointmentDate').on('change', function (event) {
         $('#continueButton').prop('disabled', !isFormComplete());
-    });
-    $('#continueButton').click(function (event) {
-        $('.cbUpdateButton').click();
-    });
+    });*/
+
+  $("#continueButton").click(function (event) {
+    $("#tzError").hide();
+    $("#apError").hide();
+    $("#rfvError").hide();
+    let sw = false;
+
+    if (
+      $("#EditRecordTimeZone").val() == "" ||
+      $("#EditRecordTimeZone").val() == "Select Time Zone"
+    ) {
+      $("#tzError").show();
+      sw = true;
+    }
+
+    if ($("#EditRecordPreferredAppointmentDate").val() == "") {
+      $("#apError").show();
+      sw = true;
+    } else if (!isValidDate($("#EditRecordPreferredAppointmentDate").val())) {
+      alert("Enter a valid date.");
+    }
+
+    if ($('#EditRecordProductID').val() == '') {
+      $("#rfvError").show();
+      sw = true;
+    }
+
+    /*let hasSelectedApTime = false;
+    for (let i = 1; i <= 6; i++) {
+      let bt = document.getElementById(`button${i}`);
+      if (hasTheClass(bt),"mygreenbutton") {
+        hasSelectedApTime = true;
+      }
+    }
+    if (hasSelectedApTime) {
+
+    }*/
+
+    if (!sw) {
+      if ($("#EditRecordPreferredAppointmentTime").val() == "") {
+        alert("You must select an appointment time.");
+      } else if (isDateInPast($("#EditRecordPreferredAppointmentDate").val())) {
+        alert("You must select a date equal to or greater than today.");
+      } else {
+        $(".cbUpdateButton").click();
+      }
+    }
+  });
 </script>

@@ -70,30 +70,51 @@
             </div>
             `);
     }
+    if ($('#caspioform .cbFormCommonError').length == 0) {
+      $('#nameError').hide();
+      $('#lastNameError').hide();
+      $('#DOBError').hide();
+      $('#relationError').hide();
+    }
     const customBtn = $("#customBtn");
     customBtn.click(function (event) {
+      let firstName = $("input[name='EditRecordFirstName']");
+      let lastName = $("input[name='EditRecordLastName']");
       let option = $("select[name='EditRecordPatientID']");
       let DOB = $("input[id^='EditRecordDOB_']");
       let relationship = $("#EditRecordChildRelation");
+
+      $('#nameError').hide();
+      $('#lastNameError').hide();
+      $('#DOBError').hide();
+      $('#relationError').hide();
 
       event.preventDefault();
       $("#EditRecordNextPage").val(nextPageVal);
       if (option.find(":selected").text() == "Add New Patient/Family Member") {
         let sw = false;
+        if (firstName.val() == '') {
+          $('#nameError').show();
+          sw = true;
+        }
+        if (lastName.val() == '') {
+          $('#lastNameError').show();
+          sw = true;
+        }
         if (DOB.val() === "") {
           sw = true;
-          alert("Date of Birth is required");
+          $('#DOBError').show();
         } else if (!isValidDate(DOB.val())) {
           sw = true;
           alert("Insert a valid Date");
         }
         if (relationship.find(":selected").text() == "Please Select") {
           sw = true;
-          alert("Select a relationship.");
+          $('#relationError').show();
         }
         if (!sw) {
           if (!isDateTwoYearsOld(DOB.val())) {
-            alert("The patient must be at least 2 years old");
+            alert("The patient must be at least 2 years old.");
           } else {
             form.submit();
           }
@@ -111,14 +132,3 @@
   });
 </script>
 
-<style>
-  #customBtn {
-    color: white !important;
-    background-color: #0c4c91 !important;
-    width: 132px !important;
-    height: 44px !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    border-width: 0px !important;
-  }
-</style>
