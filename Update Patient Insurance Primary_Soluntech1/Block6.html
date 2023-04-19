@@ -1,0 +1,51 @@
+<script>
+  $("#caspioform").on("keydown", function (event) {
+    const key = event.key;
+    if (key === "Enter") {
+      return false;
+    }
+    return true;
+  });
+  function formatDate(input) {
+    let date = input.value.replace(/\D/g, "");
+    let formattedDate = "";
+    if (date.length > 0) {
+      formattedDate = date.slice(0, 2);
+      if (
+        formattedDate < 10 &&
+        formattedDate[0] !== "0" &&
+        formattedDate[0] !== "1"
+      ) {
+        formattedDate = "0" + formattedDate;
+      }
+    }
+    if (date.length > 2) {
+      formattedDate += "/" + date.slice(2, 4);
+    }
+    if (date.length > 4) {
+      formattedDate += "/" + date.slice(4, 8);
+    }
+    input.value = formattedDate;
+  }
+  function isDateTwoYearsOld(dateString) {
+    const date = new Date(dateString);
+    const currentDate = new Date();
+    const difference = currentDate.getTime() - date.getTime();
+    const yearsDifference = difference / (1000 * 60 * 60 * 24 * 365.25);
+    if (yearsDifference >= 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function isValidDate(dateString) {
+    const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+    return datePattern.test(dateString);
+  }
+  $("#EditRecordSubscriberDOB").attr("oninput", "formatDate(this)");
+  if ($("#caspioform .cbFormCommonError").length == 0) {
+    $("#DOBError").hide();
+    $("#formatDOBError").hide();
+    $("#valueDOBError").hide();
+  }
+</script>

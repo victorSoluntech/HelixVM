@@ -1,0 +1,198 @@
+<style>
+  #secondaryDisplay {
+    border-top: 1px solid #f5f6f7;
+  }
+
+  .insuranceFrontUploadedTitle,
+  .insuranceBackUploadedTitle {
+    color: #6cbe4b;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 150%;
+    padding: 17.5px 0 20px 0;
+  }
+
+  #insuranceFrontImgContainer,
+  #insuranceBackImgContainer {
+    background-color: #e7edf4 !important;
+    width: 338px;
+    height: fit-content;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 27.5px 0px 20px 0px;
+  }
+
+  #ReplaceBtn {
+    width: 153px;
+    height: 36px;
+    background: none;
+    border: none;
+    color: #0c4c91;
+    box-shadow: none;
+  }
+
+  #ReplaceBtn label {
+    cursor: pointer;
+  }
+
+  #ReplaceBtn:hover {
+    filter: brightness(100%);
+  }
+
+  #UploadBtn {
+    width: 153px;
+    height: 36px;
+    background: #6cbe4b;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: none;
+  }
+
+  #UploadBtn label {
+    cursor: pointer;
+  }
+
+  #insuranceFrontBackLogo {
+    font-size: 30px;
+    color: #012e55;
+  }
+
+  .insuranceFrontTitle,
+  .insuranceBackTitle {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+    font-family: Open Sans;
+  }
+
+  .insuranceFrontParagraph,
+  .insuranceBackParagraph {
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
+    font-family: Open Sans;
+  }
+
+  #outputInsuranceFront,
+  #outputInsuranceBack {
+    width: 300px;
+    height: 215.42px;
+    border-radius: 16px;
+    object-fit: cover;
+    display: none;
+    margin-bottom: 26px;
+  }
+
+  .cbFormData {
+    position: relative;
+    display: inline-block;
+    width: 99px;
+    height: 48px;
+    margin-right: 10px;
+  }
+
+  .cbFormData input[type="checkbox"] {
+    display: none;
+  }
+
+  .cbFormData label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 99px;
+    height: 48px;
+    background-color: #f5f6f7;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .cbFormData label:after {
+    content: "Yes";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 43px;
+    height: 40px;
+
+    color: #797f83;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .cbFormData label:before {
+    content: "No";
+    position: absolute;
+    top: 4px;
+    left: 57px;
+    width: 38px;
+    height: 40px;
+    display: flex;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+
+    color: #ffffff;
+    background-color: #6cbe4b;
+  }
+
+  .cbFormData input[type="checkbox"]:checked + label:after {
+    background-color: #6cbe4b;
+    color: #ffffff;
+  }
+
+  .cbFormData input[type="checkbox"]:checked + label::before {
+    background-color: #f5f6f7;
+    color: #797f83;
+  }
+
+  .cbFormData input[type="hidden"] {
+    display: none;
+  }
+
+  .cbHTMLBlockContainer.cbFormData {
+    width: auto;
+    height: auto;
+  }
+  #labelEditRecordInsuranceFront {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  #labelEditRecordInsuranceBack {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .mybuttonContainer {
+    justify-content: center;
+    display: flex;
+  }
+  div[class^="cbFormFieldCell cbFormBlock5_"],
+  div[class^="cbFormFieldCell cbFormBlock15_"],
+  div[class^="cbFormFieldCell cbFormBlock7_"],
+  div[class^="cbFormFieldCell cbFormBlock9_"],
+  div[class^="cbFormFieldCell cbFormBlock11_"],
+  div[class^="cbFormFieldCell cbFormBlock13_"] {
+    text-align: right !important;
+  }
+  #EditRecordSubscriberRelation {
+    width: -webkit-fill-available;
+  }
+</style>
