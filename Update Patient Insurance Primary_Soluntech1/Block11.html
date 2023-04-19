@@ -1,0 +1,247 @@
+<script>
+    document.addEventListener("DataPageReady", function (ev) {
+      const uniqueSuffix = ev.detail.uniqueSuffix;
+      const appKey = ev.detail.appKey;
+      if (appKey === "e627b0001a035527f3b340c58109") {
+        setTimeout(() => {
+          const secondaryDisplay = $("#secondaryDisplay");
+          const insuranceFront = secondaryDisplay.find(
+            "img[id='displayInsuranceFront']"
+          );
+          const insuranceBack = secondaryDisplay.find(
+            "img[id='displayInsuranceBack']"
+          );
+          if (!insuranceBack.attr("src") && !insuranceFront.attr("src")) {
+            secondaryDisplay.hide();
+          }
+        }, 10);
+      }
+  
+      if (appKey != "e627b0005a903b8e9e674f07b4d9") return;
+      const form = $(`form[action^='https://c1hcq004.caspio.com/dp/${appKey}']`);
+      const button = form.find(`input[id='Mod0EditRecord${uniqueSuffix}']`);
+      button.hide();
+      function handleDateChange() {
+        const staleInsuranceTime = new Date(cbParamVirtual3.val());
+        const createdDate = new Date(cbParamVirtual4.val());
+        if (staleInsuranceTime > createdDate) {
+          $(
+            "#labelEditRecordInsuranceFront, #labelEditRecordInsuranceBack"
+          ).hide();
+        }
+      }
+  
+      const cbParamVirtual3 = form.find("input[name=cbParamVirtual3]");
+      cbParamVirtual3.change(handleDateChange);
+  
+      const cbParamVirtual4 = form.find("input[name=cbParamVirtual4]");
+      cbParamVirtual4.change(handleDateChange);
+      let script = document.createElement("script");
+      script.type = "text/javascript";
+      script.id = "secondaryDisplayScript";
+      if ($("#secondaryDisplayScript").length === 0) {
+        script.src =
+          "https://c1hcq004.caspio.com/dp/e627b0001a035527f3b340c58109/emb";
+        const secondaryDisplayContainer =
+          document.getElementById("secondaryDisplay");
+        if (secondaryDisplayContainer) {
+          secondaryDisplayContainer.appendChild(script);
+        }
+      }
+  
+      function insuranceInputs(InsuranceFrontString) {
+        const divFront =
+          InsuranceFrontString === "Front" ? "cbFormBlock3_" : "cbFormBlock4_";
+        const divInsurance = $(`div[class^='cbFormFieldCell ${divFront}']`);
+        const logo =
+          InsuranceFrontString === "Front"
+            ? "fa fa-id-card"
+            : "fa fa-credit-card-alt";
+        const currentImgTag = divInsurance.find(
+          `img[src^='https://c1hcq004.caspio.com/dp/${appKey}/files']`
+        );
+        const inputFieldName = "EditRecordInsurance";
+        if ($(`#insurance${InsuranceFrontString}ImgContainer`).length === 0) {
+          divInsurance.append(
+            `
+                      <div  id="insurance${InsuranceFrontString}ImgContainer">
+                          <i class="${logo}" aria-hidden="true" id="insuranceFrontBackLogo"></i>
+                        <span class="insurance${InsuranceFrontString}UploadedTitle">
+                        ${InsuranceFrontString} side image uploaded</span>
+                            
+                          <img id="outputInsurance${InsuranceFrontString}"   />  
+                          <h1 class="insurance${InsuranceFrontString}Title">Upload ${InsuranceFrontString} side</h1>
+                          <p class="insurance${InsuranceFrontString}Paragraph">No larger than 5mb in size.</p>  
+                                      
+                  <div id="${InsuranceFrontString}SideDiv">
+                  <button type="button"  id='${
+                    currentImgTag.length === 1 ? "ReplaceBtn" : `UploadBtn`
+                  }' >
+                      <label for="${inputFieldName}${InsuranceFrontString}" id="label${inputFieldName}${InsuranceFrontString}">
+                         ${
+                           currentImgTag.length === 1
+                             ? "Replace Image?"
+                             : `Upload ${InsuranceFrontString} Side`
+                         } 
+                      </label>
+                  </button>  
+                  </div>
+                      </div>
+                
+                  `
+          );
+        }
+        divInsurance.width("338px");
+        divInsurance.find("a").hide();
+        divInsurance.find("input[type='file']").hide();
+        divInsurance.find(".cbFormData").hide();
+        if (currentImgTag.length === 1) {
+          $(`#outputInsurance${InsuranceFrontString}`).attr(
+            "src",
+            currentImgTag.attr("src")
+          );
+          $(`#outputInsurance${InsuranceFrontString}`).show();
+          currentImgTag.hide();
+          $(`.insurance${InsuranceFrontString}Title`).hide();
+          $(`.insurance${InsuranceFrontString}Paragraph`).hide();
+          $(`.insurance${InsuranceFrontString}UploadedTitle`).show();
+        } else {
+          $(`.insurance${InsuranceFrontString}UploadedTitle`).hide();
+        }
+  
+        $(`#${inputFieldName}${InsuranceFrontString}`).on("change", function () {
+          const labelArchivo = $(
+            `#label${inputFieldName}${InsuranceFrontString}`
+          );
+          if (this.value != "") {
+            labelArchivo.html("Replace Image?");
+          } else {
+            labelArchivo.html("Selecciona un archivo");
+          }
+        });
+        $(`#${inputFieldName}${InsuranceFrontString}`).on("change", (event) =>
+          changeImage(event, InsuranceFrontString, currentImgTag)
+        );
+      }
+      insuranceInputs("Front");
+      insuranceInputs("Back");
+  
+      function changeImage(event, InsuranceFrontString = "", currentImgTag) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          const imageContainter = $(`#outputInsurance${InsuranceFrontString}`);
+          $(`.insurance${InsuranceFrontString}Title`).hide();
+          $(`.insurance${InsuranceFrontString}Paragraph`).hide();
+          $(`#${InsuranceFrontString}SideDiv`)
+            .find("#UploadBtn")
+            .attr("id", "ReplaceBtn");
+          $(`.insurance${InsuranceFrontString}UploadedTitle`).show();
+          imageContainter.show();
+          imageContainter.attr("src", reader.result);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
+  
+      const btnNew = form.find('[name="CreateNewInsurance"]');
+  
+      const nextPage = form.find('[name="EditRecordNextPage"]');
+      btnNew.click(function (event) {
+        event.preventDefault();
+        const createNew = form.find('[name="EditRecordCreateNew"]');
+        createNew.val("Y");
+  
+        nextPage.val("insurance-primary");
+        form.submit();
+      });
+      const btnContinue = $("#SubmitInsurance");
+      $("#EditRecordSecondaryIns").change(function (params) {
+        if (this.checked) {
+          nextPage.val("secondary-insurance");
+        } else {
+          nextPage.val("credit-card");
+        }
+      });
+      if ($("#EditRecordSecondaryIns").is(":checked")) {
+        nextPage.val("secondary-insurance");
+      } else {
+        nextPage.val("credit-card");
+      }
+      btnContinue.click(function (ev) {
+        $("#fnError").hide();
+        $("#lnError").hide();
+        $("#DOBError").hide();
+        $("#formatDOBError").hide();
+        $("#valueDOBError").hide();
+        $("#relationError").hide();
+        ev.preventDefault();
+        let submit = false;
+        if (
+          $("#outputInsuranceBack").attr("src") &&
+          $("#outputInsuranceFront").attr("src")
+        ) {
+          submit = true;
+        } else if (
+          !$("#outputInsuranceBack").attr("src") &&
+          !$("#outputInsuranceFront").attr("src")
+        ) {
+          alert("Please upload both sides");
+        } else if (!$("#outputInsuranceBack").attr("src")) {
+          alert("Please upload the back side");
+        } else if (!$("#outputInsuranceFront").attr("src")) {
+          alert("Please upload the front side");
+        }
+        submit = true;
+        if (!$("#EditRecordSecondaryIns").is(":checked")) {
+          if ($("#EditRecordSubscriberFirst").val() === "") {
+            $("#fnError").show();
+            submit = false;
+          }
+          if ($("#EditRecordSubscriberLast").val() === "") {
+            $("#lnError").show();
+            submit = false;
+          }
+          if ($("#EditRecordSubscriberDOB").val() === "") {
+            $("#DOBError").show();
+            submit = false;
+          } else if (!isValidDate($("#EditRecordSubscriberDOB").val())) {
+            $("#formatDOBError").show();
+            submit = false;
+          } else if (!isDateTwoYearsOld($("#EditRecordSubscriberDOB").val())) {
+            $("#valueDOBError").show();
+            submit = false;
+          }
+          if ($("#EditRecordSubscriberRelation").val() === "") {
+            $("#relationError").show();
+            submit = false;
+          }
+        }
+        if (submit) {
+          form.submit();
+        }
+      });
+    });
+    document.addEventListener("BeforeFormSubmit", function (event) {
+      InsurancePageSubmit(event);
+    });
+    function InsurancePageSubmit(event) {
+      if (event.detail.appKey == "e627b0005a903b8e9e674f07b4d9") {
+        var form = document.querySelector(
+          'form[action*="e627b0005a903b8e9e674f07b4d9"] '
+        );
+        var createNew = form.querySelector('[name="EditRecordCreateNew"]');
+        var secondaryIns = form.querySelector('[name="EditRecordSecondaryIns"]');
+        var nextPage = form.querySelector('[name="EditRecordNextPage"]');
+        var v3 = form.querySelector('[name="cbParamVirtual3"]');
+        var v4 = form.querySelector('[name="cbParamVirtual4"]');
+        var d3 = Date.parse(v3.value);
+        var d4 = Date.parse(v4.value);
+        if (createNew.value == "Y") {
+          nextPage.value = "insurance-primary";
+        } else if (secondaryIns.value == "Y" && d3 <= d4) {
+          nextPage.value = "Secondary-Insurance";
+        } else {
+          nextPage.value = "Credit-Card";
+        }
+      }
+    }
+  </script>
