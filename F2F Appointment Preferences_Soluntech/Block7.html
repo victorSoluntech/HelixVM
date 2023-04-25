@@ -3,6 +3,18 @@
   integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
   crossorigin="anonymous"
 ></script>
+<script src="
+https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
+"></script>
+<script>
+  $("#caspioform").on("keydown", function (event) {
+    const key = event.key;
+    if (key === "Enter") {
+      return false;
+    }
+    return true;
+  });
+</script>
 <script>
   /*function hasTheClass(element, clsName) {
     return (" " + element.className + " ").indexOf(" " + clsName + " ") > -1;
@@ -54,7 +66,18 @@
     // Compare the two dates
     return date < today;
   }
-  $("#EditRecordPreferredAppointmentDate").on("keydown", function (event) {
+  function isDateTimeInPast(dateStr, timeStr) {
+  	let formatTimeStr = timeStr.split('-')[0];
+  	formatTimeStr = formatTimeStr.replace(/\D/g, '')+':00 '+formatTimeStr.replace(/[^a-zA-Z]/g, '');
+  	const dateTimeStr = `${dateStr} ${formatTimeStr}`;
+  	const timeZone = 'America/New_York';
+  	const dateTime = luxon.DateTime.fromFormat(dateTimeStr, 'MM/dd/yyyy h:mm a', { zone: timeZone });
+  	const now = luxon.DateTime.now().setZone(timeZone);
+  	return dateTime <= now;
+	}
+  const formDate = $("#EditRecordPreferredAppointmentDate");
+  const formTime = $("#EditRecordPreferredAppointmentTime");
+  formDate.on("keydown", function (event) {
     const key = event.key;
     if (
       key === "Backspace" ||
@@ -75,8 +98,8 @@
     return (
       $("#EditRecordTimeZone").val() != "" &&
       $("#EditRecordTimeZone").val() != "Select Time Zone" &&
-      isValidDate($("#EditRecordPreferredAppointmentDate").val()) &&
-      $("#EditRecordPreferredAppointmentTime").val() != ""
+      isValidDate(formDate.val()) &&
+      formTime.val() != ""
     );
   }
 
@@ -86,8 +109,7 @@
     $("#apError").hide();
     $("#rfvError").hide();
   }
-
-  $("#EditRecordPreferredAppointmentDate").attr("oninput", "formatDate(this)");
+  formDate.attr("oninput", "formatDate(this)");
 
   /*$('#continueButton').prop('disabled', !isFormComplete());
     $('#EditRecordTimeZone').on('change', function (event) {
@@ -111,14 +133,14 @@
       sw = true;
     }
 
-    if ($("#EditRecordPreferredAppointmentDate").val() == "") {
+    if (formDate.val() == "") {
       $("#apError").show();
       sw = true;
-    } else if (!isValidDate($("#EditRecordPreferredAppointmentDate").val())) {
+    } else if (!isValidDate(formDate.val())) {
       alert("Enter a valid date.");
     }
 
-    if ($('#EditRecordProductID').val() == '') {
+    if ($("#EditRecordProductID").val() == "") {
       $("#rfvError").show();
       sw = true;
     }
@@ -135,10 +157,12 @@
     }*/
 
     if (!sw) {
-      if ($("#EditRecordPreferredAppointmentTime").val() == "") {
+      if (formTime.val() == "") {
         alert("You must select an appointment time.");
-      } else if (isDateInPast($("#EditRecordPreferredAppointmentDate").val())) {
+      } else if (isDateInPast(formDate.val())) {
         alert("You must select a date equal to or greater than today.");
+      } else if (isDateTimeInPast(formDate.val(),formTime.val())) {
+        alert("You can't select an appointment time in the past.");
       } else {
         $(".cbUpdateButton").click();
       }
