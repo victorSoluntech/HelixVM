@@ -1,0 +1,23 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    $("#caspioform").on("keydown", function (event) {
+        const key = event.key;
+        if (key === "Enter") {
+            return false;
+        }
+        return true;
+    });
+</script>
+<style>
+    #InsertRecordProductID {
+        width: 360px;
+        height: 38px;
+        border-radius: 5px;
+    }
+    @media only screen and (max-width: 1024px) {
+        #caspioform {
+            display: block !important;
+        }
+    }
+</style>

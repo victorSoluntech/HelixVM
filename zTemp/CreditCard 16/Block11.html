@@ -1,0 +1,110 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+    $("#caspioform").on("keydown", function (event) {
+        const key = event.key;
+        if (key === "Enter") {
+            return false;
+        }
+        return true;
+    });
+</script>
+<script>
+    function formatCreditCardNumber(input) {
+        let cardNumber = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        let maxLength = 16; // Set default max length for card number
+        let formatPattern = /(\d{1,4})(\d{1,6})?(\d{1,5})?/; // Set default format pattern
+
+        // Detect card type based on first digits
+        if (/^4/.test(cardNumber)) { // Visa
+            maxLength = 16;
+            formatPattern = /(\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,4})?/; // Set format pattern for Visa
+        } else if (/^5[1-5]/.test(cardNumber)) { // Mastercard
+            maxLength = 16;
+            formatPattern = /(\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,4})?/; // Set format pattern for Mastercard
+        } else if (/^3[47]/.test(cardNumber)) { // American Express
+            maxLength = 15;
+            formatPattern = /(\d{1,4})(\d{1,6})?(\d{1,5})?/; // Set format pattern for Amex
+        } else if (/^6(?:011|5)/.test(cardNumber)) { // Discover
+            maxLength = 16;
+            formatPattern = /(\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,4})?/; // Set format pattern for Discover
+        }
+
+        cardNumber = cardNumber.slice(0, maxLength); // Limit card number to max length
+
+        // Format card number with spaces every 4 digits and hyphen for Amex
+        cardNumber = cardNumber.replace(formatPattern, function (match, group1, group2, group3, group4) {
+            let formattedNumber = group1;
+            if (group2) formattedNumber += ' ' + group2;
+            if (group3) formattedNumber += ' ' + group3;
+            if (group4) formattedNumber += ' ' + group4;
+            return formattedNumber;
+        });
+
+        input.value = cardNumber; // Update input value
+    }
+    function formatCreditCardMonthIn(input) {
+        let month = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        month = month.slice(0, 2); // Limit month to 2 digits
+        if (month > 12) month = '12'; // Set max month to 12
+        input.value = month; // Update input value
+    }
+    function formatCreditCardMonthOut(input) {
+        let month = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        month = month.slice(0, 2); // Limit month to 2 digits
+
+        if (month.length === 1 && parseInt(month) > 0 && parseInt(month) < 10) {
+            // Add leading zero when user stops typing and month is less than 10
+            month = '0' + month;
+        }
+
+        input.value = month; // Update input value
+    }
+    function formatCreditCardYearIn(input) {
+        let year = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        let maxLength = 2; // Set default max length for year
+        if (year.length > maxLength) {
+            year = year.slice(0, maxLength); // Limit year to max length
+        }
+        input.value = year; // Update input value
+    }
+    function formatCreditCardYearOut(input) {
+        let year = input.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        let currentYear = new Date().getFullYear().toString().substr(-2); // Get the last two digits of the current year
+        let maxLength = 2; // Set default max length for year
+        if (year.length === maxLength) {
+            if (parseInt(year) < parseInt(currentYear)) {
+                year = currentYear;
+            }
+        }
+
+        if (year.length === 1) {
+            year = "0" + year;
+        }
+
+        input.value = year; // Update input value
+    }
+
+
+    $('#EditRecordCreditCardNumber').attr('oninput', 'formatCreditCardNumber(this)');
+    $('#cbParamVirtual1').attr('oninput', 'formatCreditCardMonthIn(this)');
+    $('#cbParamVirtual1').on("focusout", function (event) {
+        formatCreditCardMonthOut(event.currentTarget);
+    });
+    $('#cbParamVirtual2').attr('oninput', 'formatCreditCardYearIn(this)');
+    $('#cbParamVirtual2').on("focusout", function (event) {
+        formatCreditCardYearOut(event.currentTarget);
+    });
+
+    if ($('#caspioform .cbFormCommonError').length == 0) {
+        $('#creditCardError').hide();
+        $('#formatCreditCardError').hide();
+        $('#cardMonthError').hide();
+        $('#formatCardMonthError').hide();
+        $('#cardYearError').hide();
+        $('#formatCardYearError').hide();
+        $('#cardCVVError').hide();
+        $('#formatCardCVVError').hide();
+        $('#cardNameError').hide();
+    }
+</script>

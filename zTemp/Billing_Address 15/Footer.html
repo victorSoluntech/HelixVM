@@ -1,0 +1,19 @@
+<style>
+    /* @media only screen and (max-width: 767px) {
+        .cbFormNestedTableContainer {
+            display: block !important;
+        }
+    } */
+    @media only screen and (max-width: 1024px) {
+        .cbFormNestedTableContainer {
+            display: flex !important;
+        }
+    }
+</style>
+<script type="text/javascript">
+    document.addEventListener('DataPageReady', function () {
+        document.querySelectorAll('div[class^="cbUpdateButtonContainer"]').forEach(function (i) {
+            i.style.display = "none";
+        });
+    }); 
+</script>
