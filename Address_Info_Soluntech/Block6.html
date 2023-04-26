@@ -69,6 +69,7 @@
         $('#CityError').hide();
         $('#StateError').hide();
         $('#ZipError').hide();
+        $('#formatZipError').hide();
         $('.errorContainer').hide();
     }
     $('.cbUpdateButton').hide();
@@ -79,6 +80,7 @@
         $('#CityError').hide();
         $('#StateError').hide();
         $('#ZipError').hide();
+        $('#formatZipError').hide();
         $('.errorContainer').hide();
 
         let sw = false;
@@ -99,8 +101,11 @@
         }
         if ($('#EditRecordAddress_Zip').val() === '') {
             $('.errorContainer').show();
-
             $('#ZipError').show();
+            sw = true;
+        } else if ($('#EditRecordAddress_Zip').val().length != 5) {
+            $('.errorContainer').show();
+            $('#formatZipError').show();
             sw = true;
         }
         if (!sw) {
