@@ -1,0 +1,177 @@
+<script>
+
+
+    document.addEventListener('DataPageReady', function (ev) {
+
+        if (ev.detail.appKey != "e627b000ea5c87552ddc4dfb89e4") {
+            const formLogin = $("form[action^='https://c1hcq004.caspio.com/dp/e627b00073abebf866b74b28aa41']");
+            formLogin.hide();
+            if (formLogin.length == 0) {
+                // window.location.href = `${$("input[name=EditRecordNextPage]").val()}/?EncID=${gup("EncID")}&TrkID=${gup("TrkID")}`;
+            }
+            return;
+        }
+        let in1 = document.getElementById('otc-1'),
+            ins = document.querySelectorAll('input[id^="otc-"]'),
+            splitNumber = function (e) {
+
+
+                let data = e.data || e.target.value; // Chrome doesn't get the e.data, it's always empty, fallback to value then.
+                if (!data) return; // Shouldn't happen, just in case.
+                if (data.length === 1) return; // Here is a normal behavior, not a paste action.
+
+                popuNext(e.target, data);
+                //for (i = 0; i < data.length; i++ ) { ins[i].value = data[i]; }
+            },
+            popuNext = function (el, data) {
+                el.value = data[0]; // Apply first item to first input
+                data = data.substring(1); // remove the first char.
+                if (el.nextElementSibling && data.length) {
+                    // Do the same with the next element and next data
+                    popuNext(el.nextElementSibling, data);
+                }
+            };
+
+        ins.forEach(function (input) {
+            /**
+             * Control on keyup to catch what the user intent to do.
+             * I could have check for numeric key only here, but I didn't.
+             */
+            input.addEventListener('keyup', function (e) {
+                // Break if Shift, Tab, CMD, Option, Control.
+                if (e.keyCode === 16 || e.keyCode == 9 || e.keyCode == 224 || e.keyCode == 18 || e.keyCode == 17) {
+                    return;
+                }
+
+                // On Backspace or left arrow, go to the previous field.
+                if ((e.keyCode === 8 || e.keyCode === 37) && this.previousElementSibling && this.previousElementSibling.tagName === "INPUT") {
+                    this.previousElementSibling.select();
+                } else if (e.keyCode !== 8 && this.nextElementSibling) {
+                    this.nextElementSibling.select();
+                }
+
+                // If the target is populated to quickly, value length can be > 1
+                if (e.target.value.length > 1) {
+                    splitNumber(e);
+                }
+            });
+
+            /**
+             * Better control on Focus
+             * - don't allow focus on other field if the first one is empty
+             * - don't allow focus on field if the previous one if empty (debatable)
+             * - get the focus on the first empty field
+             */
+            input.addEventListener('focus', function (e) {
+                // If the focus element is the first one, do nothing
+                if (this === in1) return;
+
+                // If value of input 1 is empty, focus it.
+                if (in1.value == '') {
+
+                    in1.focus();
+
+                }
+
+                // If value of a previous input is empty, focus it.
+                // To remove if you don't wanna force user respecting the fields order.
+                if (this.previousElementSibling.value == '') {
+
+                    this.previousElementSibling.focus();
+
+                }
+            });
+        });
+
+        /**
+         * Handle copy/paste of a big number.
+         * It catches the value pasted on the first field and spread it into the inputs.
+         */
+        if (!in1) return
+        in1.addEventListener('input', splitNumber);
+        ins.forEach(function (input) {
+            input.addEventListener("input", function (e) {
+
+                const value1 = document.getElementById('otc-1').value;
+                const value2 = document.getElementById('otc-2').value;
+                const value3 = document.getElementById('otc-3').value;
+                const value4 = document.getElementById('otc-4').value;
+                const value5 = document.getElementById('otc-5').value;
+                const value6 = document.getElementById('otc-6').value;
+                const sumValues = value1 + value2 + value3 + value4 + value5 + value6
+                const smsKey = document.getElementById('cbParamVirtual2')
+                smsKey.value = sumValues;
+                const event = new Event("change");
+                smsKey.dispatchEvent(event);
+            })
+        })
+
+
+        const form = $(`form[action^='https://c1hcq004.caspio.com/dp/${ev.detail.appKey}']`)
+        console.log(form)
+        const button = form.find("input[type='submit']")
+        button.hide();
+        const buttonContainer = button.parent();
+        if ($("#customBtn").length === 0) {
+            buttonContainer.append(`
+            <div>
+                <button id="customBtn" style='background-color:#0C4C91; border-radius:8px; width:132px; height:44px; color:white; font-weight:600; box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.0) !important;'>Continue</button>
+            </div>
+            `)
+        }
+        const customBtn = $("#customBtn");
+
+        if ($('#caspioform .cbFormCommonError').length == 0) {
+            $('#codeError').hide();
+            $('#invalidError').hide();
+        }
+
+        customBtn.click(function (event) {
+            event.preventDefault();
+            $('#codeError').hide();
+            $('#invalidError').hide();
+            const uniqueSuffix = ev.detail.uniqueSuffix
+            if ($('#cbParamVirtual2').val() === '') {
+                $('#codeError').show();
+                //location.reload();
+            } else {
+
+                const nextPageField = $(`#EditRecordNextPage`)
+                let nextPageVal = ""
+
+                if ($(`#cbParamVirtual3${uniqueSuffix}`).find("option").length > 1) {
+                    nextPageVal = "../family-member-select/"
+                } else {
+                    if ($(`#EditRecordEncounterType`).val() === "f2f") {
+                        nextPageVal = "../appointment"
+                    } else {
+                        nextPageVal = "../reason-for-visit/"
+                    }
+                }
+                nextPageField.val(nextPageVal)
+                if ($('#cbParamVirtual2').val() === $(`#cbParamVirtual1${uniqueSuffix}`).val()) {
+                    form.submit();
+                } else {
+                    $('#invalidError').show();
+                }
+            }
+        })
+
+    })
+    // function gup(name, url) {
+    //     if (!url) url = location.href;
+    //     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    //     var regexS = "[\\?&]" + name + "=([^&#]*)";
+    //     var regex = new RegExp(regexS);
+    //     var results = regex.exec(url);
+    //     return results == null ? null : results[1];
+    // }
+
+    // (function getParamFromUrl(params) {
+    //     params = params.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    //     var regexS = "[\\?&]" + params + "=([^&#]*)";
+    //     var regex = new RegExp(regexS);
+    //     var results = regex.exec(location.href);
+    //     return results == null ? null : results[1];
+    // }("f2f"))
+</script>

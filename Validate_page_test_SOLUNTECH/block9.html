@@ -1,25 +1,51 @@
-<script
-  src="https://code.jquery.com/jquery-3.6.3.min.js"
-  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-  crossorigin="anonymous"
-></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+  $("#caspioform").on("keydown", function (event) {
+    const key = event.key;
+    if (key === "Enter") {
+      return false;
+    }
+    return true;
+  });
+</script>
 <script>
   document.addEventListener("DataPageReady", function (ev) {
     const contactMethodField = $("#InsertRecordContactMethod");
+    const cellPhoneField = $("#InsertRecordCellPhone");
+    const emailField = $("#InsertRecordEmail");
+    const event = new Event("change");
+
     $("#emailRadio").change(function (params) {
       if (this.checked) {
+        contactMethodField.trigger("change");
+
         contactMethodField.val("Email");
+        emailField.parent().show();
+        emailField.parent().prev().show();
+        cellPhoneField.parent().hide();
+        cellPhoneField.parent().prev().hide();
       }
     });
     $("#smsRadio").change(function (params) {
       if (this.checked) {
+        contactMethodField.trigger("change")
         contactMethodField.val("SMS");
+        cellPhoneField.parent().show();
+        cellPhoneField.parent().prev().show();
+
+        emailField.parent().hide();
+        emailField.parent().prev().hide();
       }
     });
-    if (document.getElementById("emailRadio").checked) {
+    if (document.getElementById("emailRadio") && document.getElementById("emailRadio").checked) {
       contactMethodField.val("Email");
+      cellPhoneField.parent().hide();
+      cellPhoneField.parent().prev().hide();
     } else {
       contactMethodField.val("SMS");
+      emailField.parent().hide();
+      emailField.parent().prev().hide();
     }
   });
   function isDateTwoYearsOld(dateString) {
@@ -77,6 +103,10 @@
     const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
     return datePattern.test(dateString);
   }
+  function isValidEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
   function formatPhoneNumber(input) {
     let digits = input.value.replace(/\D/g, "");
     let formattedNumber = digits.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
@@ -88,6 +118,9 @@
     $(".lastNameError").hide();
     $("#dateError").hide();
     $("#formatDateError").hide();
+    $("#valueDateError").hide();
+    $("#emailError").hide();
+    $("#formatEmailError").hide();
     $("#cellphoneError").hide();
     $("#formatCellphoneError").hide();
   }
@@ -117,13 +150,22 @@
             $('#InsertRecordCellPhone').val('');
         }
     });*/
+  $('input[name=send]', '.chooseContainer').on('change', function () {
+    $("#cellphoneError").hide();
+    $("#formatCellphoneError").hide();
+    $("#emailError").hide();
+    $("#formatEmailError").hide();
+  });
 
   $("#continueButton").click(function (event) {
     $(".lastNameError").hide();
     $("#dateError").hide();
     $("#formatDateError").hide();
+    $("#valueDateError").hide();
     $("#cellphoneError").hide();
     $("#formatCellphoneError").hide();
+    $("#emailError").hide();
+    $("#formatEmailError").hide();
     let sw = false;
     if ($("#InsertRecordLastName").val() === "") {
       $(".lastNameError").show();
@@ -135,43 +177,36 @@
     } else if (!isValidDate($("#InsertRecordDOB").val())) {
       $("#formatDateError").show();
       sw = true;
-    }
-    if ($("#InsertRecordCellPhone").val() === "") {
-      $("#cellphoneError").show();
-      sw = true;
-    } else if (!isValidPhoneNumber($("#InsertRecordCellPhone").val())) {
-      $("#formatCellphoneError").show();
+    } else if (!isDateTwoYearsOld($("#InsertRecordDOB").val())) {
+      $("#valueDateError").show();
       sw = true;
     }
-    /*const messageSw = $('input[name=send]:checked', '.emailAndSms').val();
-        if (messageSw === '1' && $('#InsertRecordEmail').val() == '') {
-                $('.emailError').show();
-                sw = true;
-        }else if (messageSw === '2' && $('#InsertRecordCellPhone').val() == '') {
-            $('.cellphoneError').show();
-            sw = true;
-        }
-        if (!sw) {
-            if (messageSw === '1' && $("input[id^='cbParamVirtual2_']").val() == '') {
-                alert('User does not exist');
-                sw = true;
-            }else if (messageSw === '2' && $("input[id^='cbParamVirtual3_']").val() == '') {
-                alert('User does not exist');
-                sw = true;
-            }
-        }*/
+    const messageSw = $('input[name=send]:checked', '.emailAndSms').val();
+    if (messageSw) {
+      if ($("#InsertRecordCellPhone").val() === "") {
+        $("#cellphoneError").show();
+        sw = true;
+      } else if (!isValidPhoneNumber($("#InsertRecordCellPhone").val())) {
+        $("#formatCellphoneError").show();
+        sw = true;
+      }
+    } else {
+      if ($("#InsertRecordEmail").val() === "") {
+        $("#emailError").show();
+        sw = true;
+      } else if (!isValidEmail($("#InsertRecordEmail").val())) {
+        $("#formatEmailError").show();
+        sw = true;
+      }
+    }
     if (!sw) {
-      if (!isDateTwoYearsOld($("#InsertRecordDOB").val())) {
-        alert("The patient must be at least 2 years old");
+      if ($("input[id^='cbParamVirtual4_']").val() == "0") {
+        alert(
+          "There is no existing record with the information provided. Please, register first to continue with the treatment process"
+        );
+        location.href = "https://dev2.helixvm.com/register-3/";
       } else {
-        if ($("input[id^='cbParamVirtual4_']").val() == "0") {
-          alert(
-            "There is no existing record with the information provided. Please, register first to continue with the treatment process"
-          );
-          location.href = "https://dev2.helixvm.com/register-3/";
-        } else {
-          $(".cbSubmitButton").click();
-        }
+        $(".cbSubmitButton").click();
       }
     }
   });

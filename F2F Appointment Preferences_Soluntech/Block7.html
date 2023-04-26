@@ -1,8 +1,5 @@
-<script
-  src="https://code.jquery.com/jquery-3.6.3.min.js"
-  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-  crossorigin="anonymous"
-></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script src="
 https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
 "></script>
@@ -67,14 +64,19 @@ https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
     return date < today;
   }
   function isDateTimeInPast(dateStr, timeStr) {
-  	let formatTimeStr = timeStr.split('-')[0];
-  	formatTimeStr = formatTimeStr.replace(/\D/g, '')+':00 '+formatTimeStr.replace(/[^a-zA-Z]/g, '');
-  	const dateTimeStr = `${dateStr} ${formatTimeStr}`;
-  	const timeZone = 'America/New_York';
-  	const dateTime = luxon.DateTime.fromFormat(dateTimeStr, 'MM/dd/yyyy h:mm a', { zone: timeZone });
-  	const now = luxon.DateTime.now().setZone(timeZone);
-  	return dateTime <= now;
-	}
+    let formatTimeStr = timeStr.split('-')[0];
+    formatTimeStr = formatTimeStr.replace(/\D/g, '') + ':00 ' + formatTimeStr.replace(/[^a-zA-Z]/g, '');
+    const dateTimeStr = `${dateStr} ${formatTimeStr}`;
+    const timeZone = 'America/New_York';
+    const dateTime = luxon.DateTime.fromFormat(dateTimeStr, 'MM/dd/yyyy h:mm a', { zone: timeZone });
+    const now = luxon.DateTime.now().setZone(timeZone);
+    if (dateTime.startOf("day").ts == now.startOf("day").ts) {
+      return dateTime <= now;
+    } else {
+      return false;
+    }
+    
+  }
   const formDate = $("#EditRecordPreferredAppointmentDate");
   const formTime = $("#EditRecordPreferredAppointmentTime");
   formDate.on("keydown", function (event) {
@@ -107,6 +109,10 @@ https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
   if ($("#caspioform .cbFormCommonError").length == 0) {
     $("#tzError").hide();
     $("#apError").hide();
+    $("#formatApError").hide();
+    $("#valueApError").hide();
+    $("#atError").hide();
+    $("#valueAtError").hide();
     $("#rfvError").hide();
   }
   formDate.attr("oninput", "formatDate(this)");
@@ -122,6 +128,10 @@ https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
   $("#continueButton").click(function (event) {
     $("#tzError").hide();
     $("#apError").hide();
+    $("#formatApError").hide();
+    $("#valueApError").hide();
+    $("#atError").hide();
+    $("#valueAtError").hide();
     $("#rfvError").hide();
     let sw = false;
 
@@ -137,7 +147,19 @@ https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
       $("#apError").show();
       sw = true;
     } else if (!isValidDate(formDate.val())) {
-      alert("Enter a valid date.");
+      $("#formatApError").show();
+      sw = true;
+    } else if (isDateInPast(formDate.val())) {
+      $("#valueApError").show();
+      sw = true;
+    }
+
+    if (formTime.val() == "") {
+      $("#atError").show();
+      sw = true;
+    } else if (isDateTimeInPast(formDate.val(), formTime.val())) {
+      $("#valueAtError").show();
+      sw = true;
     }
 
     if ($("#EditRecordProductID").val() == "") {
@@ -157,15 +179,7 @@ https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
     }*/
 
     if (!sw) {
-      if (formTime.val() == "") {
-        alert("You must select an appointment time.");
-      } else if (isDateInPast(formDate.val())) {
-        alert("You must select a date equal to or greater than today.");
-      } else if (isDateTimeInPast(formDate.val(),formTime.val())) {
-        alert("You can't select an appointment time in the past.");
-      } else {
-        $(".cbUpdateButton").click();
-      }
+      $(".cbUpdateButton").click();
     }
   });
 </script>

@@ -33,7 +33,7 @@
       }
     });
 
-    function onMyFrameLoad() {}
+    function onMyFrameLoad() { }
 
     button.hide();
     const buttonContainer = button.parent();
@@ -44,36 +44,38 @@
             </div>
             `);
     }
+
+    if ($('#caspioform .cbFormCommonError').length == 0) {
+      $('#confirmError').hide();
+    }
+
     const customBtn = $("#customBtn");
     customBtn.click(function (ev) {
       ev.preventDefault();
+      $('#confirmError').hide();
       if ($("#cb_sign_wrapper .output").val() == "") {
         console.log("Please add a signature");
       } else {
-        if (checked) {
+        if (!$("#policyTermsCheckboxNo").is(":checked")) {
           $('input[name="EditRecordSignature"]').val(
             $("#cb_sign_wrapper .output").val()
           );
           form.submit();
         } else {
-          alert("Pease confirm that you have read the terms and condition");
+          $('#confirmError').show();
         }
       }
     });
   });
   // document.addEventListener('DataPageReady', function (event) {
   //     if (event.detail.appKey != "e627b000415a0188c241482d82fe") return;
-  $("#policyTermsCheckbox").on("change", () => {
-    console.log($("#policyTermsCheckbox").is(":checked"));
-    if (!$("#policyTermsCheckbox").is(":checked")) {
-      checked = true;
-    } else {
-      checked = false;
-    }
-  });
-  // })
+
 </script>
 <style>
+  #customBtn {
+    margin-top: 0px !important;
+  }
+
   .container {
     display: flex;
     align-items: center;
@@ -115,6 +117,8 @@
     flex-direction: column !important;
     align-items: center !important;
   }
+
+
 
   @media only screen and (max-width: 767px) {
     #cb_sign_wrapper canvas {

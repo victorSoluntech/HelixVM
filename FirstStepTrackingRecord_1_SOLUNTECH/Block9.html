@@ -1,25 +1,33 @@
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script>
-document.addEventListener('DataPageReady', function (ev) {
-            const contactMethodField = $("#InsertRecordContactMethod")
-            $("#emailRadio").change(function (params) {
-                if (this.checked) {
-                    contactMethodField.val("Email")
-                }
-            })
-            $("#smsRadio").change(function (params) {
-                if (this.checked) {
-                    contactMethodField.val("SMS")
-                }
-            })
-            if (document.getElementById("emailRadio").checked) {
+    $("#caspioform").on("keydown", function (event) {
+        const key = event.key;
+        if (key === "Enter") {
+            return false;
+        }
+        return true;
+    });
+</script>
+<script>
+    document.addEventListener('DataPageReady', function (ev) {
+        const contactMethodField = $("#InsertRecordContactMethod")
+        $("#emailRadio").change(function (params) {
+            if (this.checked) {
                 contactMethodField.val("Email")
-            } else {
+            }
+        })
+        $("#smsRadio").change(function (params) {
+            if (this.checked) {
                 contactMethodField.val("SMS")
             }
-
         })
+        if (document.getElementById("emailRadio") && document.getElementById("emailRadio").checked) {
+            contactMethodField.val("Email")
+        } else {
+            contactMethodField.val("SMS")
+        }
+    })
     function isDateTwoYearsOld(dateString) {
         // Create a Date object from the input string
         const date = new Date(dateString);
@@ -89,6 +97,7 @@ document.addEventListener('DataPageReady', function (ev) {
         $('.errorContainer').hide();
         $('#dateError').hide();
         $('#formatDateError').hide();
+        $('#valueDateError').hide();
         $('#emailError').hide();
         $('#formatEmailError').hide();
         $('#cellphoneError').hide();
@@ -133,6 +142,7 @@ document.addEventListener('DataPageReady', function (ev) {
         $('.errorContainer').hide();
         $('#dateError').hide();
         $('#formatDateError').hide();
+        $('#valueDateError').hide();
         $('#emailError').hide();
         $('#formatEmailError').hide();
         $('#cellphoneError').hide();
@@ -154,6 +164,9 @@ document.addEventListener('DataPageReady', function (ev) {
         } else if (!isValidDate($('#InsertRecordDOB').val())) {
             $('#formatDateError').show();
             sw = true;
+        } else if (!isDateTwoYearsOld($('#InsertRecordDOB').val())) {
+            $('#valueDateError').show();
+            sw = true;
         }
         if ($('#InsertRecordEmail').val() === '') {
             $('#emailError').show();
@@ -174,11 +187,7 @@ document.addEventListener('DataPageReady', function (ev) {
         //     sw = true;
         // }
         if (!sw) {
-            if (!isDateTwoYearsOld($('#InsertRecordDOB').val())) {
-                alert('The patient must be at least 2 years old')
-            } else {
-                $('.cbSubmitButton').click();
-            }
+            $('.cbSubmitButton').click();
         }
     });
 </script>

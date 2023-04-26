@@ -1,0 +1,226 @@
+<div class="chooseContainer">
+    <h1 class="chooseTitle">Validate contact via</h1>
+
+    <p class="chooseParagraph">HelixVm needs to validate your preferred contact path. <span
+            style="font-weight:400;">Please confirm below</span></p>
+
+    <div class="emailAndSms">
+        <div class="smsRadio">
+            <div
+                style=" width: 48px !important; background-color:#F9FAFC; border-radius:100px; height:48px;display:flex; justify-content:center; align-items:center; !important; text-align: center;">
+                <i class="fa fa-mobile" style="font-size:24px; color:#0C4C91;"></i></div>
+
+            <div class="smsRadioTitleContainer">
+                <p style="font-weight:600;color:#111111; font-size:14px;font-family:Open Sans !important;">SMS</p>
+
+                <p>We may contact you via sms</p>
+            </div>
+            <input checked="checked" id="smsRadio" name="send" type="radio" value="2" />
+        </div>
+    </div>
+
+    <div class="emailRadio">
+        <div
+            style="width: 48px !important; background-color:#F9FAFC; border-radius:100px; height:48px;display:flex; justify-content:center; align-items:center; !important; text-align: center;">
+            <i class="fa fa-envelope" style="font-size:24px;color:#0C4C91;"></i></div>
+
+        <div class="emailRadioTitleContainer">
+            <p style="font-weight:600;color:#111111; font-size:14px;font-family:Open Sans !important;">Email</p>
+
+            <p>We may contact you via email</p>
+        </div>
+        <input id="emailRadio" name="send" type="radio" value="1" />
+    </div>
+</div>
+<style>
+    .formCaspio {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+
+    .chooseTitle {
+        font-family: Open Sans !important;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600,
+
+    }
+
+
+    .lastFirst {
+
+        display: flex;
+        margin-left: 9px;
+        margin-bottom: 5px;
+    }
+
+    .secondForm {
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+        justify-content: space-between;
+
+    }
+
+    .firstName {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lastName {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .date {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .email {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .cellphone {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .chooseParagraph {
+        font-family: Open Sans !important;
+        text-align: center !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        line-height: 21px !imporant;
+        width: 320px !important;
+
+    }
+
+    .chooseContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -10px;
+        margin-left: 10px;
+        width: 355px;
+        height: 347px;
+        background-color: #F9FAFC;
+        border-radius: 16px;
+
+    }
+
+    .formButton {
+        margin-top: 30px;
+        color: white;
+        height: 44px;
+        width: 132px;
+        background-color: #0C4C91;
+        border-radius: 10px;
+        border-width: 0px;
+        font-weight: 600;
+    }
+
+    .emailRadio {
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-width: 1px;
+        border-color: #E7EDF4;
+        border-style: solid;
+        background-color: #FFFFFF;
+        margin: 0px 20px 0px 20px;
+        border-radius: 16px;
+        width: 321px;
+        height: 88px;
+        margin-top: 15px;
+    }
+
+    .smsRadio {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-width: 1px;
+        border-color: #E7EDF4;
+        border-style: solid;
+        background-color: #FFFFFF;
+        margin: 0px 20px 0px 20px;
+        border-radius: 16px;
+        width: 321px;
+        height: 88px;
+        margin-top: 15px;
+    }
+
+    .inputSecondForm {
+
+        -moz-border-radius: 0px;
+        -moz-box-sizing: border-box;
+        -webkit-border-radius: 0px;
+        -webkit-box-sizing: border-box;
+        background: #FFFFFF;
+        border-color: #CFD4D9;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 1px;
+        box-sizing: border-box;
+        color: #6A7275;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 5px 10px;
+        height: 2.5em;
+
+    }
+
+    .inputN {
+        width: 165px;
+        margin-right: 10px;
+        -moz-border-radius: 0px;
+        -moz-box-sizing: border-box;
+        -webkit-border-radius: 0px;
+        -webkit-box-sizing: border-box;
+        background: #FFFFFF;
+        border-color: #CFD4D9;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 1px;
+        box-sizing: border-box;
+        color: #6A7275;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 5px 10px;
+        height: 2.5em;
+
+    }
+
+    .inputL {
+
+        width: 165px;
+        margin-left: 10px;
+        -moz-border-radius: 0px;
+        -moz-box-sizing: border-box;
+        -webkit-border-radius: 0px;
+        -webkit-box-sizing: border-box;
+        background: #FFFFFF;
+        border-color: #CFD4D9;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 1px;
+        box-sizing: border-box;
+        color: #6A7275;
+        font-family: Tahoma, Geneva, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 5px 10px;
+        height: 2.5em;
+    }
+</style>

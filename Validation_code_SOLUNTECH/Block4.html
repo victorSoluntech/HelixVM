@@ -1,0 +1,80 @@
+<div style="padding-bottom: 10px;text-align: center;" id="codeError">
+    <span class="codeError">Please enter a validation code</span>
+</div>
+<div style="padding-bottom: 10px;text-align: center;" id="invalidError">
+    <span class="codeError">The validation code is invalid</span>
+</div>
+<style>
+    .codeError {
+        color: red;
+    }
+</style>
+
+<div class="resendContainer">
+    <p class='resendParagraph'>It may take a minute to receive your code. Haven&#39;t received it? <a
+            onclick="resendCodeHandler()" class='resendLink'>Resend code</a></p>
+</div>
+
+
+
+<script>
+    function resendCodeHandler() {
+        ResendKey();
+        alert("A new code has been sent.")
+    }
+
+    async function ResendKey() {
+        var trackingId = document.querySelector('[name="cbParamVirtual4"]').value;
+        var key = document.querySelector('[name="EditRecordSMSKey"]').value;
+        await sendText("validater", trackingId, key);
+    }
+</script>
+
+
+
+
+
+<style>
+    .resendParagraph {
+        font-family: Open Sans;
+        width: 274px !important;
+        height: 42px !important;
+        font-weight: 400 !important;
+        font-size: 14px !important;
+        line-height: 21px !important;
+        text-align: center !important;
+    }
+
+    .resendLink {
+        font-family: Open Sans;
+        width: 274px !important;
+        height: 42px !important;
+        color: #0C4C91 !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+        line-height: 21px !important;
+        text-align: center !important;
+        cursor: pointer !important;
+    }
+
+    .resendContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        margin-bottom: 60px;
+
+    }
+
+    .cbFormNestedTableContainer {
+        display: flex;
+    }
+
+
+    @media only screen and (max-width: 767px) {
+
+        .cbFormNestedTableContainer {
+            display: flex !important;
+        }
+
+    }
+</style>
