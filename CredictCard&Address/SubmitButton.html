@@ -89,6 +89,7 @@
         $('#CityError').hide();
         $('#StateError').hide();
         $('#ZipError').hide();
+        $('#formatZipError').hide();
         $('.errorContainer').hide();
         $('#creditCardError').hide();
         $('#formatCreditCardError').hide();
@@ -163,6 +164,10 @@
         if (zip === '') {
             $('.errorContainer').show();
             $('#ZipError').show();
+            sw = true;
+        } else if (zip.length != 5) {
+            $('.errorContainer').show();
+            $('#formatZipError').show();
             sw = true;
         }
         if (!sw) {
