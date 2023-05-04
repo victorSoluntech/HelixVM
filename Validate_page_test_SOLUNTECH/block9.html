@@ -123,6 +123,7 @@
     $("#formatEmailError").hide();
     $("#cellphoneError").hide();
     $("#formatCellphoneError").hide();
+    $("#missingError").hide();
   }
 
   //$("div[class^='cbFormFieldCell cbFormBlock18_']").hide();
@@ -166,6 +167,7 @@
     $("#formatCellphoneError").hide();
     $("#emailError").hide();
     $("#formatEmailError").hide();
+    $("#missingError").hide();
     let sw = false;
     if ($("#InsertRecordLastName").val() === "") {
       $(".lastNameError").show();
@@ -201,13 +203,14 @@
     }
     if (!sw) {
       if ($("input[id^='cbParamVirtual4_']").val() == "0") {
-        alert(
-          "There is no existing record with the information provided. Please, register first to continue with the treatment process"
-        );
-        location.href = "https://dev2.helixvm.com/register-3/";
+        $("#missingError").show();
+        window.setTimeout(goTo, 4000);
       } else {
         $(".cbSubmitButton").click();
       }
     }
   });
+  function goTo() {
+    location.href = "https://dev2.helixvm.com/register-3/";
+  }
 </script>

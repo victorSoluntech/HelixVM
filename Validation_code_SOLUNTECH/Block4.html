@@ -4,9 +4,15 @@
 <div style="padding-bottom: 10px;text-align: center;" id="invalidError">
     <span class="codeError">The validation code is invalid</span>
 </div>
+<div style="padding-bottom: 10px;text-align: center;" id="codeSent">
+    <span class="codeSent">A new code has been Sent</span>
+</div>
 <style>
     .codeError {
         color: red;
+    }
+    .codeSent {
+        color: green;
     }
 </style>
 
@@ -20,7 +26,12 @@
 <script>
     function resendCodeHandler() {
         ResendKey();
-        alert("A new code has been sent.")
+        $('#codeSent').show();
+        window.setTimeout(hideAfter, 3000);
+    }
+
+    function hideAfter() {
+        $('#codeSent').hide();
     }
 
     async function ResendKey() {

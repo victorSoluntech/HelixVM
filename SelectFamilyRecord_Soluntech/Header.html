@@ -1,8 +1,14 @@
-<script
-  src="https://code.jquery.com/jquery-3.6.3.min.js"
-  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-  crossorigin="anonymous"
-></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+  $("#caspioform").on("keydown", function (event) {
+    const key = event.key;
+    if (key === "Enter") {
+      return false;
+    }
+    return true;
+  });
+</script>
 <script>
   function isDateTwoYearsOld(dateString) {
     // Create a Date object from the input string
@@ -44,7 +50,7 @@
         familySelectContainer.hide();
       }
     });
-
+    $('select[name=EditRecordPatientID]').val('');
     if (select.val() === "") {
       familySelectContainer.show();
     } else {
@@ -75,6 +81,8 @@
       $('#lastNameError').hide();
       $('#DOBError').hide();
       $('#relationError').hide();
+      $('#formatDateError').hide();
+      $('#valueDateError').hide();
     }
     const customBtn = $("#customBtn");
     customBtn.click(function (event) {
@@ -88,6 +96,8 @@
       $('#lastNameError').hide();
       $('#DOBError').hide();
       $('#relationError').hide();
+      $('#formatDateError').hide();
+      $('#valueDateError').hide();
 
       event.preventDefault();
       $("#EditRecordNextPage").val(nextPageVal);
@@ -105,19 +115,18 @@
           sw = true;
           $('#DOBError').show();
         } else if (!isValidDate(DOB.val())) {
+          $('#formatDateError').show();
           sw = true;
-          alert("Insert a valid Date");
+        } else if (!isDateTwoYearsOld(DOB.val())) {
+          $('#valueDateError').show();
+          sw = true;
         }
         if (relationship.find(":selected").text() == "Please Select") {
           sw = true;
           $('#relationError').show();
         }
         if (!sw) {
-          if (!isDateTwoYearsOld(DOB.val())) {
-            alert("The patient must be at least 2 years old.");
-          } else {
-            form.submit();
-          }
+          form.submit();
         }
       } else {
         form.submit();
@@ -131,4 +140,3 @@
     }
   });
 </script>
-
