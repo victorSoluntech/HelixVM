@@ -2,7 +2,7 @@
     document.addEventListener("DataPageReady", function (ev) {
         const uniqueSuffix = ev.detail.uniqueSuffix;
         const appKey = ev.detail.appKey;
-        if (appKey === "e627b0001a035527f3b340c58109") {
+        if (appKey === "F03D40001a035527f3b340c58109") {
             setTimeout(() => {
                 const secondaryDisplay = $("#secondaryDisplay");
                 const insuranceFront = secondaryDisplay.find(
@@ -17,8 +17,8 @@
             }, 10);
         }
 
-        if (appKey != "e627b0005a903b8e9e674f07b4d9") return;
-        const form = $(`form[action^='https://c1hcq004.caspio.com/dp/${appKey}']`);
+        if (appKey != "F03D40005a903b8e9e674f07b4d9") return;
+        const form = $(`form[action^='https://caspio.helixvm.com/dp/${appKey}']`);
         const button = form.find(`input[id='Mod0EditRecord${uniqueSuffix}']`);
         button.hide();
         function handleDateChange() {
@@ -41,7 +41,7 @@
         script.id = "secondaryDisplayScript";
         if ($("#secondaryDisplayScript").length === 0) {
             script.src =
-                "https://c1hcq004.caspio.com/dp/e627b0001a035527f3b340c58109/emb";
+                "https://caspio.helixvm.com/dp/F03D40001a035527f3b340c58109/emb";
             const secondaryDisplayContainer =
                 document.getElementById("secondaryDisplay");
             if (secondaryDisplayContainer) {
@@ -58,7 +58,7 @@
                     ? "fa fa-id-card"
                     : "fa fa-credit-card-alt";
             const currentImgTag = divInsurance.find(
-                `img[src^='https://c1hcq004.caspio.com/dp/${appKey}/files']`
+                `img[src^='https://caspio.helixvm.com/dp/${appKey}/files']`
             );
             const inputFieldName = "EditRecordInsurance";
             if ($(`#insurance${InsuranceFrontString}ImgContainer`).length === 0) {
@@ -108,13 +108,16 @@
             }
 
             $(`#${inputFieldName}${InsuranceFrontString}`).on("change", function () {
-                const labelArchivo = $(
-                    `#label${inputFieldName}${InsuranceFrontString}`
-                );
+                const labelArchivo = $(`#label${inputFieldName}${InsuranceFrontString}`);
                 if (this.value != "") {
                     labelArchivo.html("Replace Image?");
                 } else {
-                    labelArchivo.html("Selecciona un archivo");
+                    if ($(`#outputInsurance${InsuranceFrontString}`).attr("src")) {
+                        labelArchivo.html("Replace Image?");
+
+                    } else {
+                        labelArchivo.html('Selecciona un archivo')
+                    }
                 }
             });
             $(`#${inputFieldName}${InsuranceFrontString}`).on("change", (event) =>
@@ -158,40 +161,45 @@
             form.submit();
         });
 
-        $("#EditRecordSecondaryIns").change(function (params) {
-            if (this.checked) {
-                nextPage.val("secondary-insurance");
-            } else {
-                nextPage.val("credit-card");
-            }
+
+        const btnSubmitInsurance = form.find('[name="SubmitInsurance"]');
+        console.log(btnSubmitInsurance)
+        btnSubmitInsurance.click(function (event) {
+            event.preventDefault();
+            nextPageVal();
+            form.submit();
         });
-        if ($("input[id^=EditRecordSecondaryIns0_]").is(":checked")) {
-            nextPage.val("secondary-insurance");
-        } else {
-            nextPage.val("credit-card");
-        }
+        // if ($("input[id^=EditRecordSecondaryIns0_]").is(":checked")) {
+        //     nextPage.val("secondary-insurance");
+        // } else {
+        //     nextPage.val("credit-card");
+        // }
 
     });
+    function nextPageVal() {
+        var form = document.querySelector(
+            'form[action*="F03D40005a903b8e9e674f07b4d9"] '
+        );
+        var createNew = form.querySelector('[name="EditRecordCreateNew"]');
+        var secondaryIns = form.querySelector('[name="EditRecordSecondaryIns"]');
+        var nextPage = form.querySelector('[name="EditRecordNextPage"]');
+        var v3 = form.querySelector('[name="cbParamVirtual3"]');
+        var v4 = form.querySelector('[name="cbParamVirtual4"]');
+        var d3 = Date.parse(v3.value);
+        var d4 = Date.parse(v4.value);
+        console.log('Setting next page in before submit');
+        if (createNew.value == "Y") {
+            nextPage.value = "insurance-primary";
+        } else if (secondaryIns.checked == true && d3 <= d4) {
+            nextPage.value = "Secondary-Insurance";
+        } else {
+            nextPage.value = "Credit-Card";
+        }
+    }
     document.addEventListener("BeforeFormSubmit", function (event) {
-        if (event.detail.appKey == "e627b0005a903b8e9e674f07b4d9") {
-            var form = document.querySelector(
-                'form[action*="e627b0005a903b8e9e674f07b4d9"] '
-            );
-            var createNew = form.querySelector('[name="EditRecordCreateNew"]');
-            var secondaryIns = form.querySelector('[name="EditRecordSecondaryIns"]');
-            var nextPage = form.querySelector('[name="EditRecordNextPage"]');
-            var v3 = form.querySelector('[name="cbParamVirtual3"]');
-            var v4 = form.querySelector('[name="cbParamVirtual4"]');
-            var d3 = Date.parse(v3.value);
-            var d4 = Date.parse(v4.value);
-            console.log('Setting next page in before submit');
-            if (createNew.value == "Y") {
-                nextPage.value = "insurance-primary";
-            } else if (secondaryIns.value == "Yes" && d3 <= d4) {
-                nextPage.value = "Secondary-Insurance";
-            } else {
-                nextPage.value = "Credit-Card";
-            }
+
+        if (event.detail.appKey == "F03D40005a903b8e9e674f07b4d9") {
+            nextPageVal()
         }
     });
 </script>

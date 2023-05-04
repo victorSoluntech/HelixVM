@@ -1,64 +1,64 @@
 <script>
-  document.addEventListener("DataPageReady", function (ev) {
-      const uniqueSuffix = ev.detail.uniqueSuffix;
-      const appKey = ev.detail.appKey;
-      if (appKey != "e627b0005a903b8e9e674f07b4d9") return;
-      const form = $(`form[action^='https://c1hcq004.caspio.com/dp/${appKey}']`);
+    document.addEventListener("DataPageReady", function (ev) {
+        const uniqueSuffix = ev.detail.uniqueSuffix;
+        const appKey = ev.detail.appKey;
+        if (appKey != "F03D40005a903b8e9e674f07b4d9") return;
+        const form = $(`form[action^='https://c2axa237.caspio.com/dp/${appKey}']`);
 
-      const btnContinue = $("#SubmitInsurance");
+        const btnContinue = $("#SubmitInsurance");
 
-      btnContinue.click(function (ev) {
-          $("#bothFileError").hide();
-          $("#backFileError").hide();
-          $("#frontFileError").hide();
-          $("#fnError").hide();
-          $("#lnError").hide();
-          $("#DOBError").hide();
-          $("#formatDOBError").hide();
-          $("#valueDOBError").hide();
-          $("#relationError").hide();
-          ev.preventDefault();
-          let submit = false;
-          if ($("#outputInsuranceBack").attr("src") && $("#outputInsuranceFront").attr("src")) {
-              submit = true;
-          } else if (!$("#outputInsuranceBack").attr("src") && !$("#outputInsuranceFront").attr("src")) {
-              submit = false;
-              $("#bothFileError").show();
-          } else if (!$("#outputInsuranceBack").attr("src")) {
-              submit = false;
-              $("#backFileError").show();
-          } else if (!$("#outputInsuranceFront").attr("src")) {
-              submit = false;
-              $("#frontFileError").show();
-          }
-          if ($("input[id^='EditRecordPatientPrimarySubscriber1_']").is(":checked")) {
-              if ($("#EditRecordSubscriberFirst").val() === "") {
-                  $("#fnError").show();
-                  submit = false;
-              }
-              if ($("#EditRecordSubscriberLast").val() === "") {
-                  $("#lnError").show();
-                  submit = false;
-              }
-              if ($("#EditRecordSubscriberDOB").val() === "") {
-                  $("#DOBError").show();
-                  submit = false;
-              } else if (!isValidDate($("#EditRecordSubscriberDOB").val())) {
-                  $("#formatDOBError").show();
-                  submit = false;
-              } else if (!isDateTwoYearsOld($("#EditRecordSubscriberDOB").val())) {
-                  $("#valueDOBError").show();
-                  submit = false;
-              }
-              if ($("#EditRecordSubscriberRelation").val() === "") {
-                  $("#relationError").show();
-                  submit = false;
-              }
-          }
-          if (submit) {
-              form.submit();
-          }
-      });
-  })
+        btnContinue.click(function (ev) {
+            $("#bothFileError").hide();
+            $("#backFileError").hide();
+            $("#frontFileError").hide();
+            $("#fnError").hide();
+            $("#lnError").hide();
+            $("#DOBError").hide();
+            $("#formatDOBError").hide();
+            $("#valueDOBError").hide();
+            $("#relationError").hide();
+            ev.preventDefault();
+            let submit = false;
+            if ($("#outputInsuranceBack").attr("src") && $("#outputInsuranceFront").attr("src")) {
+                submit = true;
+            } else if (!$("#outputInsuranceBack").attr("src") && !$("#outputInsuranceFront").attr("src")) {
+                submit = false;
+                $("#bothFileError").show();
+            } else if (!$("#outputInsuranceBack").attr("src")) {
+                submit = false;
+                $("#backFileError").show();
+            } else if (!$("#outputInsuranceFront").attr("src")) {
+                submit = false;
+                $("#frontFileError").show();
+            }
+            if ($("input[id^='EditRecordPatientPrimarySubscriber1_']").is(":checked")) {
+                if ($("#EditRecordSubscriberFirst").val() === "") {
+                    $("#fnError").show();
+                    submit = false;
+                }
+                if ($("#EditRecordSubscriberLast").val() === "") {
+                    $("#lnError").show();
+                    submit = false;
+                }
+                if ($("#EditRecordSubscriberDOB").val() === "") {
+                    $("#DOBError").show();
+                    submit = false;
+                } else if (!isValidDate($("#EditRecordSubscriberDOB").val())) {
+                    $("#formatDOBError").show();
+                    submit = false;
+                } else if (!isDateTwoYearsOld($("#EditRecordSubscriberDOB").val())) {
+                    $("#valueDOBError").show();
+                    submit = false;
+                }
+                if ($("#EditRecordSubscriberRelation").val() === "") {
+                    $("#relationError").show();
+                    submit = false;
+                }
+            }
+            if (submit) {
+                form.submit();
+            }
+        });
+    })
 
 </script>
