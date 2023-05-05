@@ -3,7 +3,6 @@
         const uniqueSuffix = ev.detail.uniqueSuffix;
         const appKey = ev.detail.appKey;
         if (appKey != "F03D40005a903b8e9e674f07b4d9") return;
-        const form = $(`form[action^='https://c2axa237.caspio.com/dp/${appKey}']`);
 
         const btnContinue = $("#SubmitInsurance");
 
@@ -56,6 +55,8 @@
                 }
             }
             if (submit) {
+                nextPageVal();
+                const form = $(`form[action^='https://caspio.helixvm.com/dp/${appKey}']`);
                 form.submit();
             }
         });

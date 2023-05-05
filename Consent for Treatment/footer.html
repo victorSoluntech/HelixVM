@@ -1,7 +1,7 @@
 <script>
   let checked = false;
   document.addEventListener("DataPageReady", function (event) {
-    if (event.detail.appKey != "e627b000ae427e5607af40ba9645") return;
+    if (event.detail.appKey != "F03D4000ae427e5607af40ba9645") return;
     if ($('input[name="EditRecordSignature"]').val() === "") {
       $("#cb_sign_wrapper").signaturePad({ drawOnly: true });
     } else {
@@ -9,9 +9,12 @@
         .signaturePad({ drawOnly: true })
         .regenerate($('input[name="EditRecordSignature"]').val());
     }
-
+    if (window.innerWidth < 761) {
+      $("#cb_sign_wrapper").find(".pad").attr("width", "266")
+      $("#cb_sign_wrapper").find(".pad").attr("height", "133")
+    }
     const form = $(
-      "form[action^='https://c1hcq004.caspio.com/dp/e627b000ae427e5607af40ba9645']"
+      "form[action^='https://caspio.helixvm.com/dp/F03D4000ae427e5607af40ba9645']"
     );
     const button = form.find("input[type='submit']");
     if ($("#termsContainer").length === 0) {
@@ -24,7 +27,7 @@
         let script = document.createElement("script");
         script.type = "text/javascript";
         script.src =
-          "https://c1hcq004.caspio.com/dp/e627b000156e2ea0f3d1495e9bfa/emb";
+          "https://caspio.helixvm.com/dp/F03D4000156e2ea0f3d1495e9bfa/emb";
         document.getElementById("termsScriptContainer").appendChild(script);
         $("#termsScriptContainer").css("height", "200px");
         $("#termsScriptContainer").css("overflow-y", "scroll");
@@ -56,19 +59,18 @@
       if ($("#cb_sign_wrapper .output").val() == "") {
         console.log("Please add a signature");
       } else {
-        if (!$("#policyTermsCheckboxNo").is(":checked")) {
+        if ($("#policyTermsCheckboxNo").is(":checked")) {
+          $('#confirmError').show();
+        }
           $('input[name="EditRecordSignature"]').val(
             $("#cb_sign_wrapper .output").val()
           );
           form.submit();
-        } else {
-          $('#confirmError').show();
-        }
       }
     });
   });
   // document.addEventListener('DataPageReady', function (event) {
-  //     if (event.detail.appKey != "e627b000415a0188c241482d82fe") return;
+  //     if (event.detail.appKey != "F03D4000415a0188c241482d82fe") return;
 
 </script>
 <style>
@@ -112,7 +114,7 @@
     display: flex !important;
 
     margin: 0px;
-    width: 500px !important;
+    width: 300px !important;
     justify-content: center !important;
     flex-direction: column !important;
     align-items: center !important;

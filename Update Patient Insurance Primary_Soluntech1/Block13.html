@@ -164,11 +164,11 @@
 
         const btnSubmitInsurance = form.find('[name="SubmitInsurance"]');
         console.log(btnSubmitInsurance)
-        btnSubmitInsurance.click(function (event) {
-            event.preventDefault();
-            nextPageVal();
-            form.submit();
-        });
+        // btnSubmitInsurance.click(function (event) {
+        //     event.preventDefault();
+        //     nextPageVal();
+        //     form.submit();
+        // });
         // if ($("input[id^=EditRecordSecondaryIns0_]").is(":checked")) {
         //     nextPage.val("secondary-insurance");
         // } else {
@@ -199,7 +199,7 @@
     document.addEventListener("BeforeFormSubmit", function (event) {
 
         if (event.detail.appKey == "F03D40005a903b8e9e674f07b4d9") {
-            nextPageVal()
+            nextPageVal();
         }
     });
 </script>

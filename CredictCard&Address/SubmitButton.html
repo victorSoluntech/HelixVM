@@ -100,6 +100,7 @@
         $('#cardCVVError').hide();
         $('#formatCardCVVError').hide();
         $('#cardNameError').hide();
+        $('#pastDateError').hide();
 
         let sw = false;
 
@@ -172,7 +173,7 @@
         }
         if (!sw) {
             if (!isValidDate(ccMonth, '20' + ccYear)) {
-                alert('Invalid month and year, Date can not be in the past.');
+                $('#pastDateError').show();
             } else {
                 document.addEventListener('FormSubmitted', function (event) {
                     location.href =`https://dev2.helixvm.com/helix-financial-policy/?EncType=${EncounterType}`;
