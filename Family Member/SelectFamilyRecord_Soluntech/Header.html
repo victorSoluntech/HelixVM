@@ -76,6 +76,12 @@
             </div>
             `);
     }
+    $('input[name="EditRecordFirstName"]').after(`<div class="nameErrorContainer" id="nameError"><span class="nameError">First Name is required</span></div>`);
+    $('input[name="EditRecordLastName"]').after(`<div class="lastNameErrorContainer" id="lastNameError"><span class="lastNameError">Last Name is required</span></div>`);
+    $('input[name="EditRecordDOB"]').after(`<div id="DOBError"><span class="DOBError">Date of Birth is required</span></div>`)
+    .after(`<div id="formatDateError"><span class="DOBError">Enter a valid date</span></div>`)
+    .after(`<div id="valueDateError"><span class="DOBError">The patient must be at least 2 years old.</span></div>`);
+    $('select[name="EditRecordChildRelation"]').after(`<div id="relationError"><span class="relationError">Please select a relationship</span></div>`);
     if ($('#caspioform .cbFormCommonError').length == 0) {
       $('#nameError').hide();
       $('#lastNameError').hide();

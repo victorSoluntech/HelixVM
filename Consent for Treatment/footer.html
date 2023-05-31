@@ -42,36 +42,37 @@
     const buttonContainer = button.parent();
     if ($("#customBtn").length === 0) {
       buttonContainer.append(`
-            <div>
-                <button id="customBtn" style='margin-top:200px; height:44px;width:132px; background-color:#0C4C91; color:white; border-radius:8px;'>Continue</button>
-            </div>
-            `);
+                <div>
+                    <button id="customBtn" style='margin-top:200px; height:44px;width:132px; background-color:#0C4C91; color:white; border-radius:8px;'>Continue</button>
+                </div>
+                `);
     }
 
     if ($('#caspioform .cbFormCommonError').length == 0) {
       $('#confirmError').hide();
     }
-
+    $('#policyTermsCheckboxYes').click();
     const customBtn = $("#customBtn");
     customBtn.click(function (ev) {
       ev.preventDefault();
       $('#confirmError').hide();
-      if ($("#cb_sign_wrapper .output").val() == "") {
-        console.log("Please add a signature");
-      } else {
-        if ($("#policyTermsCheckboxNo").is(":checked")) {
-          $('#confirmError').show();
-        }
-          $('input[name="EditRecordSignature"]').val(
-            $("#cb_sign_wrapper .output").val()
-          );
-          form.submit();
+      if ($("#policyTermsCheckboxNo").is(":checked")) {
+        $('#confirmError').show();
       }
+      $('input[name="EditRecordSignature"]').val(
+        $("#cb_sign_wrapper .output").val()
+      );
+      form.submit();
     });
   });
   // document.addEventListener('DataPageReady', function (event) {
   //     if (event.detail.appKey != "F03D4000415a0188c241482d82fe") return;
+  document.addEventListener('BeforeFormSubmit', function (event) {
+    if (event.detail.appKey != "F03D4000ae427e5607af40ba9645") return;
+    // put the signature to the proper field
+    $('input[name="EditRecordSignature"]').val($('#cb_sign_wrapper .output').val());
 
+  });
 </script>
 <style>
   #customBtn {

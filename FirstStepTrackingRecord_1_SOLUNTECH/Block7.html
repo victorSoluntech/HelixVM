@@ -1,18 +1,17 @@
 <div class="chooseContainer">
-    <h1 class="chooseTitle">Validate contact via</h1>
+    <h1 class="chooseTitle">Choose contact via</h1>
 
-    <p class="chooseParagraph">HelixVM&nbsp;needs to validate your preferred contact path. <span
-            style="font-weight:400;">Please confirm below</span></p>
+    <p class="chooseParagraph"><span class="chooseSpan2">HelixVM uses text messaging as part of our seamless
+            process,</span> so we will communicate with you through your chosen way.</p>
 
     <div class="emailAndSms">
         <div class="smsRadio">
             <div
-                style=" width: 48px !important; background-color:#F9FAFC; border-radius:100px; height:48px;display:flex; justify-content:center; align-items:center !important; text-align: center;">
+                style="width: 48px !important; background-color:#F9FAFC; border-radius:100px; height:48px;display:flex; justify-content:center; align-items:center !important; text-align: center;">
                 <i class="fa fa-mobile" style="font-size:24px; color:#0C4C91;"></i></div>
 
             <div class="smsRadioTitleContainer">
                 <p style="color:#111111;font-family:Open Sans !important;font-weight: 600;font-size: 18px;line-height: 150%;">SMS</p>
-
                 <p>We may contact you via sms</p>
             </div>
             <input checked="checked" id="smsRadio" name="send" type="radio" value="2" />
@@ -26,7 +25,6 @@
 
         <div class="emailRadioTitleContainer">
             <p style="color:#111111;font-family:Open Sans !important;font-weight: 600;font-size: 18px;line-height: 150%;">Email</p>
-
             <p>We may contact you via email</p>
         </div>
         <input id="emailRadio" name="send" type="radio" value="1" />
@@ -41,15 +39,14 @@
 
     }
 
-
     .chooseTitle {
         font-family: Open Sans !important;
         text-align: center;
         font-size: 24px;
         font-weight: 600;
         color: #111111 !important;
-    }
 
+    }
 
     .lastFirst {
 
@@ -95,22 +92,26 @@
     }
 
     .chooseParagraph {
+        text-align: center;
+        font-weight: 400;
+        font-size: 14px;
         font-family: Open Sans !important;
-        text-align: center !important;
-        font-size: 14px !important;
-        font-weight: 600 !important;
-        line-height: 21px !important;
-        width: 320px !important;
 
+    }
+
+    .chooseSpan2 {
+        text-align: center;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: Open Sans !important;
     }
 
     .chooseContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: -10px;
-        margin-left: 10px;
-        width: 355px;
+        margin-top: -7px;
+        width: 361px;
         height: 347px;
         background-color: #F9FAFC;
         border-radius: 16px;
@@ -133,9 +134,6 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        border-width: 1px;
-        border-color: #E7EDF4;
-        border-style: solid;
         background-color: #FFFFFF;
         margin: 0px 20px 0px 20px;
         border-radius: 16px;
@@ -148,9 +146,6 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        border-width: 1px;
-        border-color: #E7EDF4;
-        border-style: solid;
         background-color: #FFFFFF;
         margin: 0px 20px 0px 20px;
         border-radius: 16px;

@@ -1,25 +1,8 @@
-<div class="buttonContainer"><button class="continueButton" id="continueButton" type="button">Continue</button></div>
+<div id="pastDateContainerError" style="margin-bottom:5px;margin-left:10px;"><span class="cardMonthError" id="pastDateError">Invalid month and year, Date can not be in the past</span></div>
 <style>
-    .continueButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        border-radius: 8px;
-        width: 132px;
-        height: 44px;
-        border-width: 0;
-        background-color: #0C4C91;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 21px;
-    }
-
-    .buttonContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-
+    @media only screen and (max-width: 767px) {
+        #pastDateContainerError {
+            width: 80% !important;
+        }
     }
 </style>

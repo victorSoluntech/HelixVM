@@ -1,0 +1,43 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://caspio.helixvm.com/dp/F03D400085c77d7a328c482985ff/emb"></script>
+<script>
+    document.addEventListener('DataPageReady', function () {
+        if ($("input[id^=xip_datasrc_Tracking]").length > 0) {
+
+            $("input[id^=xip_datasrc_Tracking]").click();
+        }
+        const form = $("form[action^='https://caspio.helixvm.com/dp/F03D400085c77d7a328c482985ff']")
+        const reasonForVisitError = $("#reasonForVisitError")
+        reasonForVisitError.hide();
+        const button = form.find('input[type="submit"]')
+        button.hide();
+        const buttonContainer = button.parent();
+        buttonContainer.append(`
+            <div>
+                <button id="customBtn" >Continue</button>
+            </div>
+            `)
+        const select = $("#EditRecordProductID");
+        select.change(function (params) {
+            reasonForVisitError.hide();
+        })
+        const customBtn = $("#customBtn");
+        customBtn.click(function (event) {
+            console.log(customBtn)
+            event.preventDefault();
+            if (select.val() === "" || select.val() === "Select a reason") {
+                reasonForVisitError.show();
+            } else {
+                form.submit();
+            }
+        })
+    })
+    document.addEventListener('FormSubmitted', function () {
+        if ($("div[id^=HeaderErrorMsg_]").length > 0) {
+            window.location.replace("https://dev2.helixvm.com/homepage/")
+        }
+    })
+
+
+</script>

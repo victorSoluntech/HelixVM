@@ -1,3 +1,6 @@
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
 <style>
     .mygreenbutton {
         background-color: #6CBE4B !important;
@@ -29,6 +32,8 @@
             zone = document.getElementById("EditRecordTimeZone").value;
             setAppointmentTimes(zone);
         }
+        $(".containerAppointButton").find("button[id^=button]")
+        console.log()
     });
 
     function setAppointmentTimes(zone) {
@@ -185,6 +190,7 @@
         if (hasClass(but, 'mygreenbutton')) {
             document.getElementById("EditRecordPreferredAppointmentTime").value = '';
             //$('#continueButton').prop('disabled', !isFormComplete());
+            console.log("hola")
             setButtonColor(button);
         } else {
             setButtonColor(button);
@@ -217,6 +223,7 @@
         }
         output = (lower + lampm + "-" + upper + uampm);
         document.getElementById("EditRecordPreferredAppointmentTime").value = output;
+        console.log($("#EditRecordPreferredAppointmentTime").val())
         document.getElementById("EditRecordTimeZoneOffset").value = timeZoneOffset;
         //$('#continueButton').prop('disabled', !isFormComplete());
     }

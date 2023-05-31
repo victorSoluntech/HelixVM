@@ -75,7 +75,7 @@ https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
     } else {
       return false;
     }
-    
+
   }
   const formDate = $("#EditRecordPreferredAppointmentDate");
   const formTime = $("#EditRecordPreferredAppointmentTime");
@@ -105,6 +105,11 @@ https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
     );
   }
 
+  $("#EditRecordTimeZone").after(`<div class="tzContainer"><span class="tzError" id="tzError">Time Zone is required</span></div>`);
+  $(".cbFormCalendar").after(`<div class="apContainer" id="apError"><span class="apError">Date is required</span></div>`)
+  .after(`<div class="apContainer" id="formatApError"><span class="apError">Enter a valid Date</span></div>`)
+  .after(`<div class="apContainer" id="valueApError"><span class="apError">You can't select a date in the past</span></div>`);
+
   $(".cbUpdateButton").hide();
   if ($("#caspioform .cbFormCommonError").length == 0) {
     $("#tzError").hide();
@@ -124,8 +129,11 @@ https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js
     $('#EditRecordPreferredAppointmentDate').on('change', function (event) {
         $('#continueButton').prop('disabled', !isFormComplete());
     });*/
-
+  $(".cbFormCalendar img").hide()
+  $("#EditRecordTimeZoneOffset").parent().hide()
+  $("#EditRecordPreferredAppointmentTime").parent().hide()
   $("#continueButton").click(function (event) {
+    console.log(formTime.val())
     $("#tzError").hide();
     $("#apError").hide();
     $("#formatApError").hide();

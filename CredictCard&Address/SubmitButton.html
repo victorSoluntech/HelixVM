@@ -114,7 +114,9 @@
         const state = $('#EditRecordAddress_State').val();
         const zip = $('#EditRecordAddress_Zip').val();
 
-        const EncounterType = $("input[name='cbParamVirtual6']").val();
+        //const EncounterType = $("input[name='cbParamVirtual6']").val();        
+        const EncounterType = $("input[name='cbParamVirtual7']").val();
+        const EncounterID = $("input[name='cbParamVirtual8']").val();
 
         if (ccNumber === '') {
             $('#creditCardError').show();
@@ -134,14 +136,22 @@
             sw = true;
         }
         if (ccYear === '') {
-            $('#cardMonthError').show();
+            if (window.innerWidth < 1024) {
+                $('#cardYearError').show();
+            } else {
+                $('#cardMonthError').show();
+            }
             sw = true;
         } else if (!isValidYear(ccYear)) {
             $('#formatCardYearError').show();
             sw = true;
         }
         if (ccCVV === '') {
-            $('#cardMonthError').show();
+            if (window.innerWidth < 1024) {
+                $('#cardCVVError').show();
+            } else {
+                $('#cardMonthError').show();
+            }
             sw = true;
         }
         if (ccName === '') {
@@ -157,7 +167,7 @@
             $('#CityError').show();
             sw = true;
         }
-        if (state === '') {
+        if (state === '' || state === 'Select a State') {
             $('.errorContainer').show();
             $('#StateError').show();
             sw = true;
@@ -175,8 +185,17 @@
             if (!isValidDate(ccMonth, '20' + ccYear)) {
                 $('#pastDateError').show();
             } else {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const prevPag = urlParams.get('PrevPag');
+                const DCParam = urlParams.get('DC');
                 document.addEventListener('FormSubmitted', function (event) {
-                    location.href =`https://dev2.helixvm.com/helix-financial-policy/?EncType=${EncounterType}`;
+                    if (DCParam === "N") {
+                        location.href = `../thank-you/`;
+                    } else {
+                        location.href = `../helix-financial-policy/?PrevPag=${prevPag}&EncID=${EncounterID}&EncType=${EncounterType}`;
+                    }
+
                 });
                 arr.forEach(function (elem) {
                     elem.click();

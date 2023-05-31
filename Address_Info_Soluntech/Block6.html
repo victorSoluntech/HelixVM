@@ -50,7 +50,7 @@
         }
         return false;
     });
-    $('#EditRecordAddress_State').on('keydown', function (event) {
+    /*$('#EditRecordAddress_State').on('keydown', function (event) {
         const key = event.key;
         if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter" || key === " ") {
             return true;
@@ -60,9 +60,9 @@
         }
         return false;
     });
-    $('#EditRecordAddress_State').on('keyup', function (event) {
-        this.value = this.value.toUpperCase();
-    });
+    document.getElementById('EditRecordAddress_State').addEventListener('input', () => {
+        document.getElementById('EditRecordAddress_State').value = document.getElementById('EditRecordAddress_State').value.substr(0, 2).toUpperCase();
+    });*/
 
     if ($('#caspioform .cbFormCommonError').length == 0) {
         $('#Address1Error').hide();
@@ -92,7 +92,7 @@
             $('#CityError').show();
             sw = true;
         }
-        if ($('#EditRecordAddress_State').val() === '') {
+        if ($('#EditRecordAddress_State').val() === '' || $('#EditRecordAddress_State').val() === 'Select a State') {
 
             $('.errorContainer').show();
             $('#StateError').show();

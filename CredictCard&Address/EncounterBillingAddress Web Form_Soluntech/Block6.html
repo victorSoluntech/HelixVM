@@ -1,9 +1,18 @@
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script>
+    $("#caspioform").on("keydown", function (event) {
+        const key = event.key;
+        if (key === "Enter") {
+            return false;
+        }
+        return true;
+    });
+</script>
+<script>
     $('#EditRecordAddress_Zip').on('keydown', function (event) {
         const key = event.key;
-        if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter" || key === ".") {
+        if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter") {
             return true;
         }
         if (/\d/.test(key)) {
@@ -11,45 +20,66 @@
         }
         return false;
     });
+    $('#EditRecordAddress_Address1').on('keydown', function (event) {
+        const key = event.key;
+        if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter" || key === " ") {
+            return true;
+        }
+        if (/[^\W_]/.test(key)) {
+            return true;
+        }
+        return false;
+    });
+    $('#EditRecordAddress_Address2').on('keydown', function (event) {
+        const key = event.key;
+        if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter" || key === " ") {
+            return true;
+        }
+        if (/[^\W_]/.test(key)) {
+            return true;
+        }
+        return false;
+    });
+    $('#EditRecordAddress_City').on('keydown', function (event) {
+        const key = event.key;
+        if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter" || key === " ") {
+            return true;
+        }
+        if (/[^\W_]/.test(key)) {
+            return true;
+        }
+        return false;
+    });
+    /*$('#EditRecordAddress_State').on('keydown', function (event) {
+        const key = event.key;
+        if (key === "Backspace" || key === "Delete" || key === "Tab" || key === "Escape" || key === "Enter" || key === " ") {
+            return true;
+        }
+        if (/^[a-zA-Z]$/.test(key)) {
+            return true;
+        }
+        return false;
+    });
+    $('#EditRecordAddress_State').on('keyup', function (event) {
+        this.value = this.value.toUpperCase();
+    });*/
 
     if ($('#caspioform .cbFormCommonError').length == 0) {
         $('#Address1Error').hide();
         $('#CityError').hide();
         $('#StateError').hide();
         $('#ZipError').hide();
+        $('#formatZipError').hide();
         $('.errorContainer').hide();
     }
-    $('.cbUpdateButton').hide();
-
-
-    $('#continueButton').click(function (event) {
-        $('#Address1Error').hide();
-        $('#CityError').hide();
-        $('#StateError').hide();
-        $('#ZipError').hide();
-        $('.errorContainer').hide();
-        
-        let sw = false;
-        if ($('#EditRecordAddress_Address1').val() === '') {
-            $('#Address1Error').show();
-            sw = true;
-        }
-        if ($('#EditRecordAddress_City').val() === '') {
-            $('#CityError').show();
-            sw = true;
-        }
-        if ($('#EditRecordAddress_State').val() === '') {
-            $('.errorContainer').show();
-            $('#StateError').show();
-            sw = true;
-        }
-        if ($('#EditRecordAddress_Zip').val() === '') {
-            $('.errorContainer').show();
-            $('#ZipError').show();
-            sw = true;
-        }
-        if (!sw) {
-            $('.cbUpdateButton').click();
-        }
-    });
+    if ($('#EditRecordAddress_State').val() == '') {
+        $('#EditRecordAddress_State').val('Select a State');
+    }
 </script>
+<style>
+    @media only screen and (min-width: 1024px) {
+        div[class^='cbHTMLBlockContainer cbFormData cbFormBlock1_'] {
+            display: none !important;
+        }
+    }
+</style>

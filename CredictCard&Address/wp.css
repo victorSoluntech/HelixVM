@@ -1,0 +1,137 @@
+#continueButton {
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0) !important;
+}
+
+@media only screen and (min-width: 1025px) {
+  .elementor-28174
+    .elementor-element.elementor-element-f3ecb30
+    > .elementor-widget-container {
+    padding: 0px 0px 50px 0px !important;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .elementor-28174
+    .elementor-element.elementor-element-f3ecb30
+    > .elementor-widget-container {
+    padding: 0px 0px 5px 0px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .elementor-widget-container {
+    padding-left: 5px !important;
+  }
+
+  #caspioform {
+    margin-top: -40px !important;
+  }
+
+  .creditCardInformationParagraph33 {
+    margin-bottom: 40px !important;
+  }
+
+  .label {
+    margin: -0.4em 0 0 1.4em !important;
+  }
+
+  #EditRecordCreditCardNumber {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    width: 300px !important;
+  }
+
+  #cbParamVirtual1 {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    width: 300px !important;
+  }
+
+  #cbParamVirtual2 {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    width: 300px !important;
+  }
+
+  #EditRecordSecurityCode {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    width: 300px !important;
+    /*margin-bottom: 20px !important;*/
+  }
+
+  #EditRecordNameOnCard {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    width: 300px !important;
+  }
+
+  label[for="EditRecordNameOnCard"],
+  label[for="EditRecordSecurityCode"] {
+    margin-left: 38px !important;
+  }
+
+  label[for="EditRecordCreditCardNumber"] {
+    margin: 0em 0 0 1.4em !important;
+    margin-left: 38px !important;
+  }
+
+  label[for="cbParamVirtual2"] {
+    margin: -0.4em 0 0 1.4em !important;
+    margin-left: 38px !important;
+  }
+
+  label[for="cbParamVirtual1"] {
+    margin: -0.4em 0 0 1.4em !important;
+    margin-left: 38px !important;
+  }
+
+  label[for="EditRecordAddress_Address1"] {
+    margin-left: 18px !important;
+  }
+
+  label[for="EditRecordAddress_Address2"] {
+    margin-left: 18px !important;
+  }
+
+  label[for="EditRecordAddress_City"] {
+    margin-left: 18px !important;
+  }
+
+  label[for="EditRecordAddress_State"] {
+    margin-left: 18px !important;
+  }
+
+  label[for="EditRecordAddress_Zip"] {
+    margin-left: 18px !important;
+  }
+
+  #EditRecordAddress_Address1 {
+    margin-left: 0px !important;
+    width: 300px !important;
+  }
+
+  #EditRecordAddress_Address2 {
+    margin-left: 0px !important;
+    width: 300px !important;
+  }
+
+  #EditRecordAddress_City {
+    margin-left: 0px !important;
+    width: 300px !important;
+  }
+
+  #EditRecordAddress_State {
+    margin-left: 0px !important;
+    width: 300px !important;
+  }
+
+  #EditRecordAddress_Zip {
+    margin-left: 0px !important;
+    width: 300px !important;
+  }
+
+  #cardMonthContainerError {
+    width: 100% !important;
+  }
+}

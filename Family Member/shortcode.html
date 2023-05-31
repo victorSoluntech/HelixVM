@@ -1,0 +1,23 @@
+<script
+  type="text/javascript"
+  src="https://caspio.helixvm.com/dp/F03D4000aeac096afc124ad9b4ea/emb"
+></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+  crossorigin="anonymous"
+></script>
+<!--  SelectFamilyRecord_Soluntech-->
+<script>
+  document.addEventListener("DataPageReady", function (ev) {
+    if ($("input[id^=xip_datasrc_Tracking]").length > 0) {
+      $("input[id^=xip_datasrc_Tracking]").click();
+    }
+  });
+  document.addEventListener("FormSubmitted", function () {
+    if ($("div[id^=HeaderErrorMsg_]").length > 0) {
+      alert("the login credentials are incorrect");
+      // window.location.replace("https://dev2.helixvm.com/homepage/")
+    }
+  });
+</script>

@@ -1,0 +1,49 @@
+<div class="errorContainer">
+    <div class="State"><span class="StateError" id="StateError">State is required</span></div>
+
+    <div class="Zip"><span class="ZipError" id="ZipError">Zip Code is required</span> <span class="ZipError"
+            id="formatZipError">Enter a 5 digit Zip Code </span></div>
+</div>
+<style>
+    .errorContainer {
+        display: flex;
+        justify-content: space-between;
+        padding: 0px 12px 0px 12px;
+        margin-bottom: 5px;
+    }
+
+    .StateError {
+        color: red;
+        margin-top: 5px;
+    }
+
+    .ZipError {
+        color: red;
+        margin-top: 5px;
+    }
+
+    .StateZip {
+
+        display: flex;
+        margin-left: 9px;
+        margin-bottom: 5px;
+    }
+
+    .State {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+
+    .Zip {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        .Zip {
+            margin-left: 20px !important;
+        }
+    }
+</style>

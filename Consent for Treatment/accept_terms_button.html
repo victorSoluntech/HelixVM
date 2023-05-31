@@ -1,87 +1,97 @@
 <div class="customPolicytermsContainer">
-    <div class="cbFormLabelCell cbFormLabel " data-cb-cell-name="policyTermsLabel"><label for="policyTermsLabel">I have
-            read and understand the policy, terms, and conditions of HelixVM.</label></div>
+  <div class="cbFormLabelCell cbFormLabel" data-cb-cell-name="policyTermsLabel">
+    <label for="policyTermsLabel"
+      >I have read and understand the policy, terms, and conditions of
+      HelixVM.</label
+    >
+  </div>
 
-    <div class="cbFormFieldCell "><span class="cbFormData" data-cb-name="cbFormDataCheckbox"><input checked="checked"
-                id="policyTermsCheckbox" name="policyTermsCheckbox" type="checkbox" value="Y" /> <label
-                for="policyTermsCheckbox">&nbsp;</label><input name="policyTermsCheckbox" type="hidden"
-                value="Y" /></span></div>
+  <fieldset class="cbFormFieldSet">
+    <span
+      aria-labelledby="EditRecordAnswer1_lbl_624ab2304f3d0b"
+      class="cbFormData"
+      data-cb-name="cbFormDataRadios"
+      role="group"
+      ><input
+        checked="checked"
+        id="policyTermsCheckboxYes"
+        name="policyTermsCheckbox"
+        type="radio"
+        value="Yes"
+      /><label for="policyTermsCheckboxYes">Yes</label>&nbsp;<input
+        id="policyTermsCheckboxNo"
+        name="policyTermsCheckbox"
+        type="radio"
+        value="No"
+      /><label for="policyTermsCheckboxNo">No</label>&nbsp;</span
+    >
+  </fieldset>
 </div>
 <style>
-    .customPolicytermsContainer {
-        display: flex;
-    }
+  .customPolicytermsContainer {
+    display: flex;
+  }
 
-    .cbFormData {
-        position: relative;
-        display: inline-block;
-        width: 99px;
-        height: 48px;
-        margin-right: 10px;
-    }
+  .cbFormLabelCell {
+    font-family: Open Sans !important;
+    width: 377px !important;
+    font-size: 14px !important;
+    line-height: 21px !important;
+    font-weight: 400 !important;
+    color: #666666 !important;
+  }
+</style>
+<style>
+  .customPolicytermsContainer .cbFormData {
+    display: flex;
+    width: 95px;
+    height: 46px;
+    border-radius: 10px;
+    background-color: #f5f6f7;
+  }
 
-    .cbFormData input[type=checkbox] {
-        display: none;
-    }
+  .cbFormData input {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    border: 0;
+  }
 
-    .cbFormData label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 99px;
-        height: 48px;
-        background-color: #F5F6F7;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 16px;
-    }
+  .cbFormData label {
+    background-color: #f5f6f7;
+    color: #797f83;
+    align-items: center;
+    display: flex;
+    width: 38px;
+    height: 40px;
+    justify-content: center;
+    transition: all 0.1s ease-in-out;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 2.5px 0px 2.5px 2.5px;
+  }
 
-    .cbFormData label:after {
-        content: 'Yes';
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        width: 43px;
-        height: 40px;
-        background-color: #6CBE4B;
-        color: #FFFFFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 8px;
-        transition: transform 0.3s ease-in-out;
-    }
+  .cbFormData label:hover {
+    cursor: pointer;
+  }
 
-    .cbFormData label:before {
-        content: "No";
-        position: absolute;
-        top: 4px;
-        left: 57px;
-        width: 38px;
-        height: 40px;
-        display: flex;
-        border-radius: 8px;
-        justify-content: center;
-        align-items: center;
-        color: #797F83;
-    }
+  .cbFormData input:checked + label {
+    background-color: #6cbe4b;
+    color: #ffffff;
+    width: 43px;
+    height: 40px;
+    box-shadow: none;
+  }
 
-    .cbFormData input[type=checkbox]:checked+label:after {
-        background-color: #F5F6F7;
-        color: #797F83;
-    }
+  .cbFormData label:first-of-type {
+    border-radius: 10px;
+    margin-right: 1px;
+  }
 
-    .cbFormData input[type=checkbox]:checked+label::before {
-        background-color: #6CBE4B;
-        color: #FFFFFF;
-    }
-
-    .cbFormData input[type=hidden] {
-        display: none;
-    }
+  .cbFormData label:last-of-type {
+    border-radius: 10px;
+  }
 </style>
