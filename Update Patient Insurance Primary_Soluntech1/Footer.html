@@ -1,231 +1,273 @@
 <style>
     .label {
-        margin: -0.4em 0 0 1.4em !important;
+      margin: -0.4em 0 0 1.4em !important;
     }
     #secondaryDisplay {
-        border-top: 1px solid #f5f6f7;
+      border-top: 1px solid #f5f6f7;
     }
-
+  
     .insuranceFrontUploadedTitle,
     .insuranceBackUploadedTitle {
-        color: #6cbe4b;
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 150%;
-        padding: 17.5px 0 20px 0;
+      color: #6cbe4b;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 150%;
+      padding: 17.5px 0 20px 0;
     }
-
+  
     #insuranceFrontImgContainer,
     #insuranceBackImgContainer {
-        background-color: #e7edf4 !important;
-        width: 338px;
-        height: fit-content;
-        border-radius: 16px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 27.5px 0px 20px 0px;
+      background-color: #e7edf4 !important;
+      width: 338px;
+      height: fit-content;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 27.5px 0px 20px 0px;
     }
-
+  
     #ReplaceBtn {
-        width: 153px;
-        height: 36px;
-        background: none;
-        border: none;
-        color: #0c4c91;
-        box-shadow: none;
+      width: 153px;
+      height: 36px;
+      background: none;
+      border: none;
+      color: #0c4c91;
+      box-shadow: none;
     }
-
+  
     #ReplaceBtn label {
-        cursor: pointer;
+      cursor: pointer;
     }
-
+  
     #ReplaceBtn:hover {
-        filter: brightness(100%);
+      filter: brightness(100%);
     }
-
+  
     #UploadBtn {
-        width: 153px;
-        height: 36px;
-        background: #6cbe4b;
-        border: none;
-        border-radius: 8px;
-        color: #ffffff;
-        cursor: pointer;
-        box-shadow: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      width: 153px;
+      height: 36px;
+      background: #6cbe4b;
+      border: none;
+      border-radius: 8px;
+      color: #ffffff;
+      cursor: pointer;
+      box-shadow: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
+  
     #labelEditRecordInsuranceFront {
-        margin: 0;
+      margin: 0;
     }
-
+  
     #labelEditRecordInsuranceBack {
-        margin: 0;
+      margin: 0;
     }
-
+  
     #UploadBtn label {
-        cursor: pointer;
+      cursor: pointer;
     }
-
+  
     #insuranceFrontBackLogo {
-        font-size: 30px;
-        color: #012e55;
+      font-size: 30px;
+      color: #012e55;
     }
-
+  
     .insuranceFrontTitle,
     .insuranceBackTitle {
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 21px;
-        font-family: Open Sans;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 21px;
+      font-family: Open Sans;
     }
-
+  
     .insuranceFrontParagraph,
     .insuranceBackParagraph {
-        color: #666666;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 12px;
-        font-family: Open Sans;
+      color: #666666;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 12px;
+      font-family: Open Sans;
     }
-
+  
     #outputInsuranceFront,
     #outputInsuranceBack {
-        width: 300px;
-        height: 215.42px;
-        border-radius: 16px;
-        object-fit: cover;
-        display: none;
-        margin-bottom: 26px;
+      width: 300px;
+      height: 215.42px;
+      border-radius: 16px;
+      object-fit: cover;
+      display: none;
+      margin-bottom: 26px;
     }
-
+  
     .cbHTMLBlockContainer.cbFormData {
-        width: auto;
-        height: auto;
+      width: auto;
+      height: auto;
     }
-
+  
     #labelEditRecordInsuranceFront {
-        font-family: "Open Sans";
-        font-style: normal;
-        font-weight: 600;
-        font-size: 14px;
+      font-family: "Open Sans";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
     }
-
+  
     #labelEditRecordInsuranceBack {
-        font-family: "Open Sans";
-        font-style: normal;
-        font-weight: 600;
-        font-size: 14px;
+      font-family: "Open Sans";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
     }
-
+  
     .mybuttonContainer {
-        justify-content: center;
-        display: flex;
+      justify-content: center;
+      display: flex;
     }
-
+  
     .mybuttonContainer input:hover {
-        background-color: #0C4C91 !important;
+      background-color: #0c4c91 !important;
     }
-
-
-    div[class^="cbFormFieldCell cbFormBlock6_"],
-    div[class^="cbFormFieldCell cbFormBlock16_"] {
-        text-align: right !important;
+  
+    div[class^="cbHTMLBlockContainer cbFormData cbFormBlock6_"] {
+      display: block !important;
     }
-
+  
     #EditRecordSubscriberRelation {
-        width: -webkit-fill-available;
+      width: -webkit-fill-available;
     }
-</style>
-
-<style>
+  </style>
+  
+  <style>
     .cbFormFieldSet .cbFormData {
-        display: flex;
-        width: 95px;
-        height: 46px;
-        border-radius: 10px;
-        background-color: #F5F6F7;
+      display: flex;
+      width: 95px;
+      height: 46px;
+      border-radius: 10px;
+      background-color: #f5f6f7;
     }
-
+  
     .cbFormFieldSet .cbFormData input {
-        position: absolute !important;
-        height: 1px;
-        width: 1px;
-        border: 0;
+      position: absolute !important;
+      height: 1px;
+      width: 1px;
+      border: 0;
     }
-
+  
     .cbFormFieldSet .cbFormData label {
-        background-color: #F5F6F7;
-        color: #797F83;
-        align-items: center;
-        display: flex;
-        width: 38px;
-        height: 40px;
-        justify-content: center;
-        transition: all 0.1s ease-in-out;
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 16px;
-        margin: 2.5px 0px 2.5px 2.5px;
+      background-color: #f5f6f7;
+      color: #797f83;
+      align-items: center;
+      display: flex;
+      width: 38px;
+      height: 40px;
+      justify-content: center;
+      transition: all 0.1s ease-in-out;
+      font-family: "Roboto";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 16px;
+      margin: 2.5px 0px 2.5px 2.5px;
     }
-
+  
     .cbFormFieldSet .cbFormData label:hover {
-        cursor: pointer;
+      cursor: pointer;
     }
-
-    .cbFormFieldSet .cbFormData input:checked+label {
-        background-color: #6CBE4B;
-        color: #FFFFFF;
-        width: 43px;
-        height: 40px;
-        box-shadow: none;
+  
+    .cbFormFieldSet .cbFormData input:checked + label {
+      background-color: #6cbe4b;
+      color: #ffffff;
+      width: 43px;
+      height: 40px;
+      box-shadow: none;
     }
-
+  
     .cbFormFieldSet .cbFormData label:first-of-type {
-        border-radius: 10px;
-        margin-right: 1px;
+      border-radius: 10px;
+      margin-right: 1px;
     }
-
+  
     .cbFormFieldSet .cbFormData label:last-of-type {
-        border-radius: 10px;
+      border-radius: 10px;
     }
-
-    div[class^='cbFormFieldCell cbFormBlock7_'],
-    div[class^='cbFormFieldCell cbFormBlock17_'] {
-        display: flex;
-        justify-content: end;
+  
+    div[class^="cbFormFieldCell cbFormBlock7_"],
+    div[class^="cbFormFieldCell cbFormBlock17_"] {
+      display: flex;
+      justify-content: end;
     }
-
+  
     #SubmitInsurance,
     #CreateNewInsurance,
     #ContinueInsurance {
-        text-transform: inherit;
+      text-transform: inherit;
     }
-
+  
     @media only screen and (max-width: 1024px) and (min-width: 577px) {
-        #caspioform section[class^="cbFormSection"] {
-            width: 100% !important;
-        }
+      #caspioform section[class^="cbFormSection"] {
+        width: 100% !important;
+      }
     }
-
+  
     @media only screen and (max-width: 1024px) {
-        div[class^='cbFormFieldCell cbFormBlock9_'],
-        div[class^='cbFormFieldCell cbFormBlock11_'],
-        div[class^='cbFormFieldCell cbFormBlock13_'],
-        div[class^='cbFormFieldCell cbFormBlock15_'] {
-            margin-bottom: 20px !important;
-        }
+      div[class^="cbFormFieldCell cbFormBlock7_"],
+      div[class^="cbFormFieldCell cbFormBlock9_"],
+      div[class^="cbFormFieldCell cbFormBlock11_"],
+      div[class^="cbFormFieldCell cbFormBlock13_"],
+      div[class^="cbFormFieldCell cbFormBlock15_"] {
+        margin-bottom: 20px !important;
+      }
     }
-
+  
     @media only screen and (max-width: 577px) {
-        #caspioform section[class^="cbFormSection"] {
-            width: 100% !important;
-        }
+      #caspioform section[class^="cbFormSection"] {
+        width: 100% !important;
+      }
     }
-</style>
+  
+    div[class^="cbFormFieldCell cbFormBlock3_"] > img,
+    div[class^="cbFormFieldCell cbFormBlock4_"] > img,
+    div[class^="cbFormDataCell cbFormBlock3_"] > img,
+    div[class^="cbFormDataCell cbFormBlock4_"] > img,
+    .cbFormCalendar img,
+    #bothFileError,
+    #backFileError,
+    #frontFileError,
+    #fnError,
+    #lnError,
+    #DOBError,
+    #formatDOBError,
+    #valueDOBError,
+    #relationError {
+      display: none;
+    }
+  
+    .STF14FC256C7C446E19F194A2B1FF39FCD .cbFormDataCell {
+      padding-top: 15px;
+    }
+  
+    .STF14FC256C7C446E19F194A2B1FF39FCD .cbFormDataCell > span {
+      margin-left: 15px;
+    }
+    .STF14FC256C7C446E19F194A2B1FF39FCD
+      .cbFormNestedTableContainer
+      .cbFormDataCell
+      span {
+      margin-left: 0px;
+    }
+    fieldset[class="cbFormFieldSet"] {
+      display: flex;
+      justify-content: end;
+    }
+  
+    @media only screen and (max-width: 577px) {
+      fieldset[class="cbFormFieldSet"] {
+        display: flex;
+        justify-content: start;
+      }
+    }
+  </style>
+  

@@ -1,60 +1,43 @@
+<!-- HTML-6 -->
 <script>
   $("#caspioform").on("keydown", function (event) {
-    const key = event.key;
-    if (key === "Enter") {
-      return false;
-    }
-    return true;
+      const key = event.key;
+      if (key === "Enter") {
+          return false;
+      }
+      return true;
   });
-  // $('#EditRecordSubscriberFirst');
-  // $('#EditRecordSubscriberLast');
-  // $('#EditRecordSubscriberDOB');
-  // $('#EditRecordSubscriberRelation');
-  $('#EditRecordSubscriberFirst').after(`<div id="fnError"><span class="fnError">First Name is required</span></div>`);
-  $('#EditRecordSubscriberLast').after(`<div id="lnError"><span class="lnError">Last Name is required</span></div>`);
-  $('.cbFormCalendar').after(`<div id="DOBError"><span class="DOBError">Date of birth is required</span></div>`)
-  .after(`<div id="formatDOBError"><span class="DOBError">Please enter a valid date</span></div>`)
-  .after(`<div id="valueDOBError"><span class="DOBError">The Suscriber must be at least 2 years old</span></div>`);
-  $('#EditRecordSubscriberRelation').after(`<div id="relationError"><span class="relationError">Please select a relation</span></div>`);
-
-  //$('label[for="EditRecordSubscriberFirst"]').addClass("label");
-  //$('label[for="EditRecordSubscriberLast"]').addClass("label");
-  //$('label[for="EditRecordSubscriberDOB"]').addClass("label");
-  //$('label[for="EditRecordSubscriberRelation"]').addClass("label");
-  //$('#EditRecordSubscriberFirst').before(`<label for="EditRecordSubscriberFirst" class="label">Primary Subscriber First Name *</label>`);
-  //$('#EditRecordSubscriberLast').before(`<label for="EditRecordSubscriberLast" class="label">Primary Subscriber Last Name *</label>`);
-  //$('#EditRecordSubscriberDOB').before(`<label for="EditRecordSubscriberDOB" class="label">Primary Subscriber DOB *</label>`);
-  //$('#EditRecordSubscriberRelation').before(`<label for="EditRecordSubscriberRelation" class="label">Primary Subscriber Relation *</label>`);
+  document.addEventListener("DataPageReady", function (ev) {
+      const appKey = ev.detail.appKey;
+      if (appKey !== "F03D40005a903b8e9e674f07b4d9") return;
+      $('#EditRecordSubscriberFirst').after(`<div id="fnError"><span class="fnError">First Name is required</span></div>`);
+      $('#EditRecordSubscriberLast').after(`<div id="lnError"><span class="lnError">Last Name is required</span></div>`);
+      $('.cbFormCalendar').after(`<div id="DOBError"><span class="DOBError">Date of birth is required</span></div>`)
+          .after(`<div id="formatDOBError"><span class="DOBError">Please enter a valid date</span></div>`)
+          .after(`<div id="valueDOBError"><span class="DOBError">The Suscriber must be at least 2 years old</span></div>`);
+      $('#EditRecordSubscriberRelation').after(`<div id="relationError"><span class="relationError">Please select a relation</span></div>`);
+      $('div[class^="cbHTMLBlockContainer cbFormData cbFormBlock6_"]').css("display","block");
+  });
 </script>
+
+
 <style>
-  .fnError {
-    color: red;
-    font-size: 13px;
-  }
-  
-  .lnError {
-    color: red;
-    font-size: 13px;
-  }
-
-  .relationError {
-    color: red;
-    font-size: 13px;
-  }
-
+  .fnError,
+  .lnError,
+  .relationError,
   .DOBError {
-    color: red;
-    font-size: 13px;
+      color: red;
+      font-size: 13px;
   }
 
   input::placeholder {
-    color: #DCDCDC !important;
+      color: #DCDCDC !important;
   }
 
   div[class^='cbFormFieldCell cbFormBlock9_'],
   div[class^='cbFormFieldCell cbFormBlock11_'],
   div[class^='cbFormFieldCell cbFormBlock13_'],
   div[class^='cbFormFieldCell cbFormBlock15_'] {
-    margin-bottom: 15px !important;
+      margin-bottom: 15px !important;
   }
 </style>

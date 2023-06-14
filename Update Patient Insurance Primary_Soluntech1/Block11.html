@@ -1,11 +1,54 @@
+<!-- HTML 11 -->
 <script>
+    function nextPageVal(btn) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const DC = urlParams.get('DC');
+        var form = document.querySelector(
+            `form[action*="F03D40005a903b8e9e674f07b4d9"] `
+        );
+        console.log({ DC, btn })
+        var createNew = form.querySelector('[name="EditRecordCreateNew"]');
+        var secondaryIns = form.querySelector('[name="EditRecordSecondaryIns"]');
+        var nextPage = form.querySelector('[name="EditRecordNextPage"]');
+        var v3 = form.querySelector('[name="cbParamVirtual3"]');
+        var v4 = form.querySelector('[name="cbParamVirtual4"]');
+        var d3 = Date.parse(v3.value);
+        var d4 = Date.parse(v4.value);
+        if (btn === "SubmitInsurance") {
+            if (secondaryIns.checked == true) {
+                nextPage.value = "Secondary-Insurance";
+            } else {
+                nextPage.value = "Credit-Card"
+            }
+            if (DC && DC === "N") {
+                if (secondaryIns.checked == true) {
+                    nextPage.value = "Secondary-Insurance";
+                } else {
+                    nextPage.value = "thank-you"
+                }
+            }
+        }
+        if (btn === "ContinueInsurance") { // when the stale exist
+            if (DC && DC === "N") {
+                nextPage.value = "thank-you"
+            } else {
+                nextPage.value = "Credit-Card";
+            }
+        }
+        if (btn === "CreateNewInsurance") {
+            const createNew = form.querySelector('[name="EditRecordCreateNew"]');
+            createNew.value = "Y";
+            nextPage.value = "insurance-primary";
+        }
+        console.log('Setting next page in before submit: ', nextPage.value);
+    }
     document.addEventListener("DataPageReady", function (ev) {
         const uniqueSuffix = ev.detail.uniqueSuffix;
         const appKey = ev.detail.appKey;
+
         if (appKey != "F03D40005a903b8e9e674f07b4d9") return;
-
         const btnContinue = $("#SubmitInsurance");
-
         btnContinue.click(function (ev) {
             $("#bothFileError").hide();
             $("#backFileError").hide();
@@ -55,8 +98,8 @@
                 }
             }
             if (submit) {
-                nextPageVal();
-                const form = $(`form[action^='https://caspio.helixvm.com/dp/${appKey}']`);
+                nextPageVal("SubmitInsurance");
+                const form = $(`form[action*='${appKey}']`);
                 form.submit();
             }
         });

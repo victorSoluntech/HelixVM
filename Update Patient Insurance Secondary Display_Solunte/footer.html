@@ -1,0 +1,121 @@
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+  crossorigin="anonymous"
+></script>
+<script>
+  $("#caspioform").on("keydown", function (event) {
+    const key = event.key;
+    if (key === "Enter") {
+      return false;
+    }
+    return true;
+  });
+</script>
+<script>
+  document.addEventListener("DataPageReady", function (ev) {
+    const uniqueSuffix = ev.detail.uniqueSuffix;
+    const appKey = ev.detail.appKey;
+
+    if (appKey != "F03D40001a035527f3b340c58109") return;
+    //const form = $(`form[action^='https://caspio.helixvm.com/dp/${appKey}']`)
+    // const button = $("#secondaryDisplay").find(`input[id='Mod0EditRecord${uniqueSuffix}']`)
+
+    // button.parent().hide();
+    function insuranceInputs(InsuranceFrontString) {
+      // Hide the default selectFile
+      const divFront =
+        InsuranceFrontString === "Front" ? "cbFormBlock3_" : "cbFormBlock4_";
+      const divInsurance = $("#secondaryDisplay").find(
+        `div[class^='cbFormDataCell ${divFront}']`
+      );
+      const logo =
+        InsuranceFrontString === "Front"
+          ? "fa fa-id-card"
+          : "fa fa-credit-card-alt";
+      // If the user already has an image
+      const currentImgTag = divInsurance.find(
+        `img[src^='https://caspio.helixvm.com/dp/${appKey}/files']`
+      );
+      //   console.log(divInsurance, currentImgTag)
+
+      const inputFieldName = "EditRecordInsurance";
+
+      if (
+        $("#secondaryDisplay").find(
+          `#insurance${InsuranceFrontString}ImgContainer`
+        ).length === 0
+      ) {
+        divInsurance.append(
+          `
+            <div  id="insurance${InsuranceFrontString}ImgContainer">
+                <i class="${logo}" aria-hidden="true" id="insuranceFrontBackLogo"></i>
+                <span class="insurance${InsuranceFrontString}UploadedTitle">${InsuranceFrontString} side image uploaded</span>
+                <img id="displayInsurance${InsuranceFrontString}"   />  
+                            
+        <div id="${InsuranceFrontString}SideDiv">
+      
+        </div>
+            </div>
+      
+        `
+        );
+      }
+
+      // divInsurance.find("a").hide()
+      // divInsurance.find("input[type='file']").hide();
+      // // hide the remove checkbox when editing a current tracking id
+      // divInsurance.find(".cbFormData").hide();
+      if (currentImgTag.length === 1) {
+        // $(`#${InsuranceFrontString}SideDiv`).hide();
+        $(`#displayInsurance${InsuranceFrontString}`).attr(
+          "src",
+          currentImgTag.attr("src")
+        );
+        $(`#displayInsurance${InsuranceFrontString}`).show();
+        currentImgTag.hide();
+      }
+    }
+    insuranceInputs("Front");
+    insuranceInputs("Back");
+  });
+</script>
+
+<style>
+  .insuranceFrontUploadedTitle,
+  .insuranceBackUploadedTitle {
+    color: #6cbe4b;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 150%;
+    padding: 17.5px 0 20px 0;
+  }
+
+  #insuranceFrontImgContainer,
+  #insuranceBackImgContainer {
+    background-color: #e7edf4;
+    width: 338px;
+    height: fit-content;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 27.5px 0px 20px 0px;
+    margin-bottom: 25px;
+  }
+
+  #displayInsuranceFront,
+  #displayInsuranceBack {
+    width: 300px;
+    height: 215.42px;
+    border-radius: 16px;
+    object-fit: cover;
+    display: none;
+    margin-bottom: 26px;
+  }
+  div[class^="cbFormDataCell cbFormBlock3_"] br,
+  div[class^="cbFormDataCell cbFormBlock4_"] br {
+    display: none;
+  }
+</style>
